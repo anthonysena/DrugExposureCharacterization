@@ -1,0 +1,21 @@
+Package: DrugUtilization
+Type: Package
+Title: Generating drug utilization study statistics against the OMOP CDM
+Version: 0.0.1
+Date: 2019-12-13
+Authors@R: c(
+  person("Anthony", "Sena", , "asena5@its.jnj.com", role = c("aut", "cre"))
+  )
+Maintainer: Anthony Sena <asena5@its.jnj.com>
+Description: An R package for generating summary statistics for drug utilization studies using the OMOP Common Data Model.
+License: Apache License 2.0
+VignetteBuilder: knitr
+Imports:
+    rJava,
+    SqlRender
+Suggests:
+  testthat,
+  knitr,
+  rmarkdown
+Encoding: UTF-8
+LazyData: true

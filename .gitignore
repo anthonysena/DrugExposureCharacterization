@@ -37,3 +37,9 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+# Scratch files
+*inst/sql/sql_server/scratch*
+
+# Error reports
+errorReport.txt
