@@ -72,11 +72,12 @@ GROUP BY c.concept_id
 ;
 
 -- Get drug values specified
-IF XACT_STATE() = 1 COMMIT; CREATE TABLE  #DATA_SPEC   (concept_id			    BIGINT			  NOT NULL ,
-  field_name          VARCHAR(255) NOT NULL,
-  tot_spec			  BIGINT	NOT NULL
+CREATE TABLE #DATA_SPEC (
+  concept_id	    BIGINT			 NOT NULL ,
+  field_name      VARCHAR(255) NOT NULL,
+  tot_spec			  BIGINT	     NOT NULL
 )
-WITH (LOCATION = USER_DB, DISTRIBUTION = REPLICATE);
+;
 
 INSERT INTO #DATA_SPEC (
 	concept_id,
