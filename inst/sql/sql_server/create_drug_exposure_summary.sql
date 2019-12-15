@@ -2,7 +2,7 @@ IF OBJECT_ID('@resultsSchema.dus_overview', 'U') IS NOT NULL DROP TABLE @results
 
 CREATE TABLE @resultsSchema.dus_overview (
   concept_id			    BIGINT			  NOT NULL,
-	total_records			  BIGINT			  NOT NULL,
+	total_records			  BIGINT			  NOT NULL, 
 	total_person_cnt		BIGINT			  NOT NULL,
 	field_name          VARCHAR(50)	  NOT NULL,
 	tot_spec            BIGINT			  NOT NULL, 
@@ -134,6 +134,57 @@ LEFT JOIN (
   FROM #DATA_SPEC d
   INNER JOIN #totals t ON d.concept_id = t.concept_id
 ) res ON c.concept_id = res.concept_id
+;
+
+IF OBJECT_ID('@resultsSchema.dus_dist', 'U') IS NOT NULL DROP TABLE @resultsSchema.dus_dist;
+
+CREATE TABLE @resultsSchema.dus_dist (
+  concept_id			    BIGINT			  NOT NULL,
+  field_name          VARCHAR(50)   NOT NULL,
+  field_val           VARCHAR(MAX)  NOT NULL,
+	total_records			  BIGINT			  NOT NULL, 
+	total_person_cnt		BIGINT			  NOT NULL
+);
+
+INSERT INTO @resultsSchema.dus_dist (
+  concept_id,
+  field_name,
+  field_val,
+	total_records, 
+	total_person_cnt
+)
+SELECT 
+	c.concept_id, 
+	'days_supply' field_name,
+	days_supply field_value,
+	COUNT(*) total_records,
+	COUNT(DISTINCT person_id) total_person_cnt
+FROM @cdmDatabaseSchema.drug_exposure de
+INNER JOIN #CONCEPTS c ON de.drug_concept_id = c.concept_id
+WHERE days_supply IS NOT NULL
+GROUP BY c.concept_id, days_supply
+UNION ALL
+SELECT 
+	c.concept_id, 
+	'quantity' field_name,
+	quantity field_value,
+	COUNT(*) total_records,
+	COUNT(DISTINCT person_id) total_person_cnt
+FROM @cdmDatabaseSchema.drug_exposure de
+INNER JOIN #CONCEPTS c ON de.drug_concept_id = c.concept_id
+WHERE quantity IS NOT NULL
+GROUP BY c.concept_id, quantity
+UNION ALL
+SELECT 
+	c.concept_id, 
+	'sig' field_name,
+	sig field_value,
+	COUNT(*) total_records,
+	COUNT(DISTINCT person_id) total_person_cnt
+FROM @cdmDatabaseSchema.drug_exposure de
+INNER JOIN #CONCEPTS c ON de.drug_concept_id = c.concept_id
+WHERE sig IS NOT NULL
+GROUP BY c.concept_id, sig
 ;
 
 DROP TABLE #Concepts;
