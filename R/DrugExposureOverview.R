@@ -75,3 +75,23 @@ getDrugExposureDistribution <- function(connectionDetails,
   
   return(DatabaseConnector::querySql(connection, sql))
 }
+
+getDrugDataPresence <- function(connectionDetails,
+                                cdmDatabaseSchema,
+                                oracleTempSchema = cdmDatabaseSchema,
+                                resultsSchema) {
+  connection <- DatabaseConnector::connect(connectionDetails)
+  
+  # Get results
+  sql <-
+    SqlRender::loadRenderTranslateSql(
+      sqlFilename = "get_drug_data_presence.sql",
+      packageName = "DrugUtilization",
+      dbms = attr(connection, "dbms"),
+      oracleTempSchema = oracleTempSchema,
+      cdmDatabaseSchema = cdmDatabaseSchema,
+      resultsSchema = resultsSchema
+    )
+  
+  return(DatabaseConnector::querySql(connection, sql))
+}

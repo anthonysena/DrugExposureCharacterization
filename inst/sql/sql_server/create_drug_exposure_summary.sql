@@ -49,14 +49,14 @@ SELECT
 FROM @cdmDatabaseSchema.drug_exposure de
 INNER JOIN #CONCEPTS c ON de.drug_concept_id = c.concept_id
 GROUP BY c.concept_id
-UNION ALL
-SELECT 
-	c.concept_id, 
-	'drug_exposure_start_datetime' field_name,
-	SUM(CASE WHEN de.drug_exposure_start_datetime IS NOT NULL THEN 1 ELSE 0 END) tot_spec
-FROM @cdmDatabaseSchema.drug_exposure de
-INNER JOIN #CONCEPTS c ON de.drug_concept_id = c.concept_id
-GROUP BY c.concept_id
+--UNION ALL
+--SELECT 
+--	c.concept_id, 
+--	'drug_exposure_start_datetime' field_name,
+--	SUM(CASE WHEN de.drug_exposure_start_datetime IS NOT NULL THEN 1 ELSE 0 END) tot_spec
+--FROM @cdmDatabaseSchema.drug_exposure de
+--INNER JOIN #CONCEPTS c ON de.drug_concept_id = c.concept_id
+--GROUP BY c.concept_id
 UNION ALL
 SELECT 
 	c.concept_id, 
@@ -65,19 +65,19 @@ SELECT
 FROM @cdmDatabaseSchema.drug_exposure de
 INNER JOIN #CONCEPTS c ON de.drug_concept_id = c.concept_id
 GROUP BY c.concept_id
-UNION ALL
-SELECT 
-	c.concept_id, 
-	'drug_exposure_end_datetime' field_name,
-	SUM(CASE WHEN de.drug_exposure_end_datetime IS NOT NULL THEN 1 ELSE 0 END) tot_spec
-FROM @cdmDatabaseSchema.drug_exposure de
-INNER JOIN #CONCEPTS c ON de.drug_concept_id = c.concept_id
-GROUP BY c.concept_id
+--UNION ALL
+--SELECT 
+--	c.concept_id, 
+--	'drug_exposure_end_datetime' field_name,
+--	SUM(CASE WHEN de.drug_exposure_end_datetime IS NOT NULL THEN 1 ELSE 0 END) tot_spec
+--FROM @cdmDatabaseSchema.drug_exposure de
+--INNER JOIN #CONCEPTS c ON de.drug_concept_id = c.concept_id
+--GROUP BY c.concept_id
 UNION ALL
 SELECT 
 	c.concept_id, 
 	'drug_type_concept_id' field_name,
-	SUM(CASE WHEN de.drug_exposure_end_datetime IS NOT NULL THEN 1 ELSE 0 END) tot_spec
+	SUM(CASE WHEN de.drug_type_concept_id IS NOT NULL THEN 1 ELSE 0 END) tot_spec
 FROM @cdmDatabaseSchema.drug_exposure de
 INNER JOIN #CONCEPTS c ON de.drug_concept_id = c.concept_id
 GROUP BY c.concept_id
@@ -185,6 +185,89 @@ FROM @cdmDatabaseSchema.drug_exposure de
 INNER JOIN #CONCEPTS c ON de.drug_concept_id = c.concept_id
 WHERE sig IS NOT NULL
 GROUP BY c.concept_id, sig
+;
+
+IF OBJECT_ID('@resultsSchema.dus_data_presence', 'U') IS NOT NULL DROP TABLE @resultsSchema.dus_data_presence;
+
+CREATE TABLE @resultsSchema.dus_data_presence (
+  concept_id			    BIGINT			  NOT NULL,
+  field_1_name        VARCHAR(50)   NOT NULL,
+  field_1_pres        INT           NOT NULL,
+  field_2_name        VARCHAR(50)   NULL,
+  field_2_pres        INT           NULL,
+  field_3_name        VARCHAR(50)   NULL,
+  field_3_pres        INT           NULL,
+  field_4_name        VARCHAR(50)   NULL,
+  field_4_pres        INT           NULL,
+  field_5_name        VARCHAR(50)   NULL,
+  field_5_pres        INT           NULL,
+	rec_cnt			        BIGINT			  NOT NULL, 
+	rec_cnt_total			  BIGINT			  NOT NULL, 
+	rec_cnt_pct         FLOAT         NOT NULL,
+	person_cnt          BIGINT        NOT NULL,
+	person_cnt_total    BIGINT        NOT NULL,
+	person_cnt_pct      FLOAT         NOT NULL
+);
+
+-- This query counts all the combinations of days_supply, quantity and sig for each of the drug concepts
+INSERT INTO @resultsSchema.dus_data_presence (
+	concept_id,
+	field_1_name,
+	field_1_pres,
+	field_2_name,
+	field_2_pres,
+	field_3_name,
+	field_3_pres,
+	rec_cnt,
+	rec_cnt_total,
+	rec_cnt_pct,
+	person_cnt,
+	person_cnt_total,
+	person_cnt_pct
+)
+SELECT
+	c.concept_id,
+	c.field_1_name,
+	c.field_1_pres,
+	c.field_2_name,
+	c.field_2_pres,
+	c.field_3_name,
+	c.field_3_pres,
+	c.cnt rec_cnt,
+	t.total_records rec_cnt_total,
+	(c.cnt*1.0 / t.total_records) * 100 rec_cnt_pct,
+	c.person_cnt,
+	t.total_person_cnt person_cnt_total,
+	(c.person_cnt*1.0 / t.total_person_cnt) * 100 person_cnt_pct
+FROM (
+	SELECT 
+		c.concept_id,
+		'days_supply' field_1_name,
+		CASE WHEN de.days_supply IS NOT NULL THEN 1 ELSE 0 END field_1_pres,
+		'quantity' field_2_name,
+		CASE WHEN de.quantity IS NOT NULL THEN 1 ELSE 0 END field_2_pres,
+		'sig' field_3_name,
+		CASE WHEN de.sig IS NOT NULL THEN 1 ELSE 0 END field_3_pres,
+		COUNT(*) cnt,
+		COUNT(DISTINCT de.person_id) person_cnt
+	FROM @cdmDatabaseSchema.drug_exposure de
+	INNER JOIN #CONCEPTS c ON de.drug_concept_id = c.concept_id
+	GROUP BY 
+		c.concept_id, 
+		CASE WHEN de.days_supply IS NOT NULL THEN 1 ELSE 0 END,
+		CASE WHEN de.quantity IS NOT NULL THEN 1 ELSE 0 END,
+		CASE WHEN de.sig IS NOT NULL THEN 1 ELSE 0 END
+) c
+INNER JOIN (
+	SELECT 
+		de.drug_concept_id  concept_id,
+		COUNT(*) total_records,
+		COUNT(DISTINCT de.person_id) total_person_cnt
+	FROM @cdmDatabaseSchema.drug_exposure de
+	INNER JOIN #CONCEPTS c ON de.drug_concept_id = c.concept_id
+	GROUP BY 
+		de.drug_concept_id
+) t ON t.concept_id = c.concept_id
 ;
 
 DROP TABLE #Concepts;
