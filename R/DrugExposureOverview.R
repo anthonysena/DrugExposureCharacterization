@@ -36,6 +36,7 @@ createDrugExposureOverview <- function(connectionDetails,
                                 reportOverallTime = T)
 }
 
+#' @export
 getDrugExposureOverview <- function(connectionDetails,
                                     cdmDatabaseSchema,
                                     oracleTempSchema = cdmDatabaseSchema,
@@ -56,6 +57,7 @@ getDrugExposureOverview <- function(connectionDetails,
   return(DatabaseConnector::querySql(connection, sql))
 }
 
+#' @export
 getDrugExposureDistribution <- function(connectionDetails,
                                     cdmDatabaseSchema,
                                     oracleTempSchema = cdmDatabaseSchema,
@@ -76,6 +78,7 @@ getDrugExposureDistribution <- function(connectionDetails,
   return(DatabaseConnector::querySql(connection, sql))
 }
 
+#' @export
 getDrugDataPresence <- function(connectionDetails,
                                 cdmDatabaseSchema,
                                 oracleTempSchema = cdmDatabaseSchema,
