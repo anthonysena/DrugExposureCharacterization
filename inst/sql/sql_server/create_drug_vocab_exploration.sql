@@ -2,9 +2,9 @@ IF OBJECT_ID('@resultsSchema.dus_de_sourcecode_map', 'U') IS NOT NULL DROP TABLE
 
 CREATE TABLE @resultsSchema.dus_de_sourcecode_map (
   concept_id			     BIGINT			  NOT NULL,
-  drug_type_concept_id BIGINT       NOT NULL,
+  drug_type_concept_id BIGINT       NULL,
   source_concept_id    BIGINT       NOT NULL,
-  dose_form_concept_id BIGINT       NOT NULL,
+  dose_form_concept_id BIGINT       NULL,
 	total_records			   BIGINT			  NOT NULL, 
 	total_person_cnt		 BIGINT			  NOT NULL,
 	min_de_start_date    DATETIME     NULL, 

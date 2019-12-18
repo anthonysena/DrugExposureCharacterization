@@ -22,8 +22,18 @@ connectionDetails <-
 # roxatidine (A02BA06) => 19011685
 # lafutidine (A02BA08) => 43009003
 
-drugConceptsOfInterest <- c(997276, 961047, 953076, 950696, 19011685, 43009003)
+drugConceptsOfInterest <- c(997276, 961047, 953076, 950696, 19011685, 43009003, 40007176)
 
+# Concept Utilities --------------------------
+deConceptList = DrugUtilization::getConcepts(
+  connectionDetails, 
+  cdmDatabaseSchema = cdmDatabaseSchema, 
+  conceptIds = drugConceptsOfInterest
+)
+
+onlyIngredients <- DrugUtilization::isConceptListOfIngredients(deConceptList, drugConceptsOfInterest)
+
+# Vocabulary Exploration --------------------------
 DrugUtilization::createDrugVocabExploration(
     connectionDetails,
     cdmDatabaseSchema = cdmDatabaseSchema,

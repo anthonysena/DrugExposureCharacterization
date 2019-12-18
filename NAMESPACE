@@ -2,9 +2,11 @@
 
 export(createDrugExposureOverview)
 export(createDrugVocabExploration)
+export(getConcepts)
 export(getDrugDataPresence)
 export(getDrugExposureDistribution)
 export(getDrugExposureOverview)
 export(getDrugExposureSourceMap)
+export(isConceptListOfIngredients)
 importFrom(SqlRender,loadRenderTranslateSql)
 importFrom(SqlRender,translateSql)
