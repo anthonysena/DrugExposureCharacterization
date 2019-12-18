@@ -156,7 +156,7 @@ INSERT INTO @resultsSchema.dus_dist (
 SELECT 
 	c.concept_id, 
 	'days_supply' field_name,
-	days_supply field_value,
+	CAST(days_supply as VARCHAR(MAX)) field_value,
 	COUNT(*) total_records,
 	COUNT(DISTINCT person_id) total_person_cnt
 FROM @cdmDatabaseSchema.drug_exposure de
@@ -167,7 +167,7 @@ UNION ALL
 SELECT 
 	c.concept_id, 
 	'quantity' field_name,
-	quantity field_value,
+	CAST(quantity AS VARCHAR(MAX)) field_value,
 	COUNT(*) total_records,
 	COUNT(DISTINCT person_id) total_person_cnt
 FROM @cdmDatabaseSchema.drug_exposure de

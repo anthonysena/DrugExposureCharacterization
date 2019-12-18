@@ -1,10 +1,16 @@
+# Get settings from .Renviron
+user <- if(Sys.getenv("DB_USER")=="") NULL else Sys.getenv("DB_USER")
+password <- if(Sys.getenv("DB_PASSWORD")=="") NULL else Sys.getenv("DB_PASSWORD")
+cdmDatabaseSchema <- Sys.getenv("CDM_SCHEMA")
+resultsSchema <- Sys.getenv("RESULTS_SCHEMA")
+
 # Details for connecting to the server:
 connectionDetails <-
   DatabaseConnector::createConnectionDetails(
     dbms = Sys.getenv("DBMS"),
     server = Sys.getenv("DB_SERVER"),
-    user = NULL,
-    password = NULL,
+    user = user,
+    password = password,
     port = Sys.getenv("DB_PORT")
   )
 
@@ -21,8 +27,8 @@ drugConceptsOfInterest <- c(997276, 961047, 953076, 950696, 19011685, 43009003)
 # Create exposure overview
 DrugUtilization::createDrugExposureOverview(
   connectionDetails,
-  cdmDatabaseSchema = Sys.getenv("CDM_SCHEMA"),
-  resultsSchema = Sys.getenv("RESULTS_SCHEMA"),
+  cdmDatabaseSchema = cdmDatabaseSchema,
+  resultsSchema = resultsSchema,
   includeDescendants = TRUE,
   drugConceptIds = drugConceptsOfInterest #c(939259, 19060647) -- COPD
 )
@@ -31,22 +37,22 @@ DrugUtilization::createDrugExposureOverview(
 deOverview <-
   DrugUtilization::getDrugExposureOverview(
     connectionDetails,
-    cdmDatabaseSchema = Sys.getenv("CDM_SCHEMA"),
-    resultsSchema = Sys.getenv("RESULTS_SCHEMA")
+    cdmDatabaseSchema = cdmDatabaseSchema,
+    resultsSchema = resultsSchema
   )
 
 # Get distributions
 deDist <-
   DrugUtilization::getDrugExposureDistribution(
     connectionDetails,
-    cdmDatabaseSchema = Sys.getenv("CDM_SCHEMA"),
-    resultsSchema = Sys.getenv("RESULTS_SCHEMA")
+    cdmDatabaseSchema = cdmDatabaseSchema,
+    resultsSchema = resultsSchema
   )
 
 # Get data presence
 dePresence <-
   DrugUtilization::getDrugDataPresence(
     connectionDetails,
-    cdmDatabaseSchema = Sys.getenv("CDM_SCHEMA"),
-    resultsSchema = Sys.getenv("RESULTS_SCHEMA")
+    cdmDatabaseSchema = cdmDatabaseSchema,
+    resultsSchema = resultsSchema
   )
