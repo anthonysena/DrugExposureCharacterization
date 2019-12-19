@@ -103,3 +103,26 @@ getDrugVocabCombos <- function(connectionDetails,
   return(DatabaseConnector::querySql(connection, sql))
 }
 
+
+#' @export
+getDrugOrphans <- function(connectionDetails,
+                           cdmDatabaseSchema,
+                           oracleTempSchema = cdmDatabaseSchema,
+                           resultsSchema) {
+  connection <- DatabaseConnector::connect(connectionDetails)
+  on.exit(DatabaseConnector::disconnect(connection))
+  
+  # Get results
+  sql <-
+    SqlRender::loadRenderTranslateSql(
+      sqlFilename = "get_drug_orphans.sql",
+      packageName = "DrugUtilization",
+      dbms = attr(connection, "dbms"),
+      oracleTempSchema = oracleTempSchema,
+      cdmDatabaseSchema = cdmDatabaseSchema,
+      resultsSchema = resultsSchema
+    )
+  
+  return(DatabaseConnector::querySql(connection, sql))
+}
+

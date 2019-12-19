@@ -24,14 +24,6 @@ connectionDetails <-
 
 drugConceptsOfInterest <- c(997276, 961047, 953076, 950696, 19011685, 43009003)
 
-# Concept Utilities --------------------------
-# deConceptList = DrugUtilization::getConcepts(
-#   connectionDetails, 
-#   cdmDatabaseSchema = cdmDatabaseSchema, 
-#   conceptIds = drugConceptsOfInterest
-# )
-# 
-# onlyIngredients <- DrugUtilization::isConceptListOfIngredients(deConceptList, drugConceptsOfInterest)
 
 # Vocabulary Exploration --------------------------
 DrugUtilization::createDrugVocabExploration(
@@ -59,37 +51,54 @@ deVocabCombos <-
     resultsSchema = resultsSchema
   )
 
-# # Drug Exposure Overview --------------
-# 
-# # Create exposure overview
-# DrugUtilization::createDrugExposureOverview(
-#   connectionDetails,
-#   cdmDatabaseSchema = cdmDatabaseSchema,
-#   resultsSchema = resultsSchema,
-#   includeDescendants = TRUE,
-#   drugConceptIds = drugConceptsOfInterest #c(939259, 19060647) -- COPD
+# Get drug orphans
+deOrphans <-
+  DrugUtilization::getDrugOrphans (
+    connectionDetails,
+    cdmDatabaseSchema = cdmDatabaseSchema,
+    resultsSchema = resultsSchema
+  )
+
+# Drug Exposure Overview --------------
+
+# Create exposure overview
+DrugUtilization::createDrugExposureOverview(
+  connectionDetails,
+  cdmDatabaseSchema = cdmDatabaseSchema,
+  resultsSchema = resultsSchema,
+  includeDescendants = TRUE,
+  drugConceptIds = drugConceptsOfInterest #c(939259, 19060647) -- COPD
+)
+
+# Get exposure overview
+deOverview <-
+  DrugUtilization::getDrugExposureOverview(
+    connectionDetails,
+    cdmDatabaseSchema = cdmDatabaseSchema,
+    resultsSchema = resultsSchema
+  )
+
+# Get distributions
+deDist <-
+  DrugUtilization::getDrugExposureDistribution(
+    connectionDetails,
+    cdmDatabaseSchema = cdmDatabaseSchema,
+    resultsSchema = resultsSchema
+  )
+
+# Get data presence
+dePresence <-
+  DrugUtilization::getDrugDataPresence(
+    connectionDetails,
+    cdmDatabaseSchema = cdmDatabaseSchema,
+    resultsSchema = resultsSchema
+  )
+
+# Concept Utilities --------------------------
+# deConceptList = DrugUtilization::getConcepts(
+#   connectionDetails, 
+#   cdmDatabaseSchema = cdmDatabaseSchema, 
+#   conceptIds = drugConceptsOfInterest
 # )
 # 
-# # Get exposure overview
-# deOverview <-
-#   DrugUtilization::getDrugExposureOverview(
-#     connectionDetails,
-#     cdmDatabaseSchema = cdmDatabaseSchema,
-#     resultsSchema = resultsSchema
-#   )
-# 
-# # Get distributions
-# deDist <-
-#   DrugUtilization::getDrugExposureDistribution(
-#     connectionDetails,
-#     cdmDatabaseSchema = cdmDatabaseSchema,
-#     resultsSchema = resultsSchema
-#   )
-# 
-# # Get data presence
-# dePresence <-
-#   DrugUtilization::getDrugDataPresence(
-#     connectionDetails,
-#     cdmDatabaseSchema = cdmDatabaseSchema,
-#     resultsSchema = resultsSchema
-#   )
+# onlyIngredients <- DrugUtilization::isConceptListOfIngredients(deConceptList, drugConceptsOfInterest)
