@@ -1,6 +1,6 @@
 {DEFAULT @includeDescendants = 0}
 
-CREATE TABLE #Concepts (
+CREATE TABLE #CONCEPTS (
   concept_id			    BIGINT			  NOT NULL
 )
 ;

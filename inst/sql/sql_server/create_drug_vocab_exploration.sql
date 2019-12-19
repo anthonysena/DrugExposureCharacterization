@@ -13,6 +13,8 @@ CREATE TABLE @resultsSchema.dus_de_sourcecode_map (
 
 @insertConcepts
 
+@insertConceptsByIngredient
+
 -- Roll up all drug_exposures with dose form
 INSERT INTO @resultsSchema.dus_de_sourcecode_map (
   concept_id,
@@ -45,4 +47,27 @@ GROUP BY
 	ISNULL(de.drug_type_concept_id, 0),
 	de.drug_source_concept_id,
 	c2.concept_id
+;
+
+IF OBJECT_ID('@resultsSchema.dus_ingredient_combos', 'U') IS NOT NULL DROP TABLE @resultsSchema.dus_ingredient_combos;
+
+CREATE TABLE @resultsSchema.dus_ingredient_combos (
+  ingredient_concept_id			     BIGINT			  NOT NULL,
+  combo_ingredient_concept_id    BIGINT       NOT NULL
+);
+
+-- Find other ingredients used in combination with those ingredients specified
+INSERT INTO @resultsSchema.dus_ingredient_combos (
+  ingredient_concept_id,
+  combo_ingredient_concept_id
+)
+SELECT DISTINCT
+	c.ingredient_concept_id,
+	c2.concept_id combo_ingredient_concept_id
+from #CONCEPTS_INGRED c
+INNER JOIN @cdmDatabaseSchema.drug_strength ds 
+	ON c.concept_id = ds.drug_concept_id 
+	AND ds.ingredient_concept_id <> c.ingredient_concept_id
+INNER JOIN @cdmDatabaseSchema.concept c2
+	ON c2.concept_id = ds.ingredient_concept_id
 ;

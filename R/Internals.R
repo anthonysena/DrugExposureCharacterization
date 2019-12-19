@@ -15,3 +15,13 @@
                                            includeDescendants = as.integer(includeDescendants),
                                            conceptIds = drugConceptIds));
 }
+
+.insertConceptsByIngredient <- function(connection, 
+                                        cdmDatabaseSchema,
+                                        drugConceptIds) {
+  return(SqlRender::loadRenderTranslateSql(sqlFilename = "insert_concepts_by_ingredient.sql", 
+                                           packageName = "DrugUtilization",
+                                           dbms = attr(connection, "dbms"),
+                                           cdmDatabaseSchema = cdmDatabaseSchema,
+                                           conceptIds = drugConceptIds));
+}

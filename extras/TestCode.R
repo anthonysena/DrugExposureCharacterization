@@ -22,24 +22,23 @@ connectionDetails <-
 # roxatidine (A02BA06) => 19011685
 # lafutidine (A02BA08) => 43009003
 
-drugConceptsOfInterest <- c(997276, 961047, 953076, 950696, 19011685, 43009003, 40007176)
+drugConceptsOfInterest <- c(997276, 961047, 953076, 950696, 19011685, 43009003)
 
 # Concept Utilities --------------------------
-deConceptList = DrugUtilization::getConcepts(
-  connectionDetails, 
-  cdmDatabaseSchema = cdmDatabaseSchema, 
-  conceptIds = drugConceptsOfInterest
-)
-
-onlyIngredients <- DrugUtilization::isConceptListOfIngredients(deConceptList, drugConceptsOfInterest)
+# deConceptList = DrugUtilization::getConcepts(
+#   connectionDetails, 
+#   cdmDatabaseSchema = cdmDatabaseSchema, 
+#   conceptIds = drugConceptsOfInterest
+# )
+# 
+# onlyIngredients <- DrugUtilization::isConceptListOfIngredients(deConceptList, drugConceptsOfInterest)
 
 # Vocabulary Exploration --------------------------
 DrugUtilization::createDrugVocabExploration(
     connectionDetails,
     cdmDatabaseSchema = cdmDatabaseSchema,
     resultsSchema = resultsSchema,
-    includeDescendants = TRUE,
-    drugConceptIds = drugConceptsOfInterest,
+    drugIngredientConceptIds = drugConceptsOfInterest,
     debug = F,
     debugSqlFile = "vocab.dsql"
 )
@@ -47,6 +46,14 @@ DrugUtilization::createDrugVocabExploration(
 # Get drug exposure source code map
 deSourceCodeMap <-
   DrugUtilization::getDrugExposureSourceMap (
+    connectionDetails,
+    cdmDatabaseSchema = cdmDatabaseSchema,
+    resultsSchema = resultsSchema
+  )
+
+# Get drug exposure source code map
+deVocabCombos <-
+  DrugUtilization::getDrugVocabCombos (
     connectionDetails,
     cdmDatabaseSchema = cdmDatabaseSchema,
     resultsSchema = resultsSchema

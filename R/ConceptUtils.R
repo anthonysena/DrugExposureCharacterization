@@ -1,12 +1,11 @@
 #' @export
-getConcepts <- function(connectionDetails,
+getConcepts <- function(connection,
                         cdmDatabaseSchema,
                         conceptIds = c()) {
   if (length(conceptIds) <= 0) {
     stop("You must provide at least 1 concept id")
   }
-  connection <- DatabaseConnector::connect(connectionDetails)
-  
+
   sql <-
     SqlRender::loadRenderTranslateSql(
       sqlFilename = "get_concepts.sql",
