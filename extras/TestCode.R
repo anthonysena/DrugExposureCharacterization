@@ -24,6 +24,43 @@ connectionDetails <-
 
 drugConceptsOfInterest <- c(997276, 961047, 953076, 950696, 19011685, 43009003)
 
+
+# Vocabulary Exploration --------------------------
+DrugUtilization::createDrugVocabExploration(
+    connectionDetails,
+    cdmDatabaseSchema = cdmDatabaseSchema,
+    resultsSchema = resultsSchema,
+    drugIngredientConceptIds = drugConceptsOfInterest,
+    debug = F,
+    debugSqlFile = "vocab.dsql"
+)
+
+# Get drug exposure source code map
+deSourceCodeMap <-
+  DrugUtilization::getDrugExposureSourceMap (
+    connectionDetails,
+    cdmDatabaseSchema = cdmDatabaseSchema,
+    resultsSchema = resultsSchema
+  )
+
+# Get drug exposure source code map
+deVocabCombos <-
+  DrugUtilization::getDrugVocabCombos (
+    connectionDetails,
+    cdmDatabaseSchema = cdmDatabaseSchema,
+    resultsSchema = resultsSchema
+  )
+
+# Get drug orphans
+deOrphans <-
+  DrugUtilization::getDrugOrphans (
+    connectionDetails,
+    cdmDatabaseSchema = cdmDatabaseSchema,
+    resultsSchema = resultsSchema
+  )
+
+# Drug Exposure Overview --------------
+
 # Create exposure overview
 DrugUtilization::createDrugExposureOverview(
   connectionDetails,
@@ -56,3 +93,12 @@ dePresence <-
     cdmDatabaseSchema = cdmDatabaseSchema,
     resultsSchema = resultsSchema
   )
+
+# Concept Utilities --------------------------
+# deConceptList = DrugUtilization::getConcepts(
+#   connectionDetails, 
+#   cdmDatabaseSchema = cdmDatabaseSchema, 
+#   conceptIds = drugConceptsOfInterest
+# )
+# 
+# onlyIngredients <- DrugUtilization::isConceptListOfIngredients(deConceptList, drugConceptsOfInterest)

@@ -9,6 +9,7 @@ createDrugExposureOverview <- function(connectionDetails,
     stop("You must provide at least 1 drug concept id")
   }
   connection <- DatabaseConnector::connect(connectionDetails)
+  on.exit(DatabaseConnector::disconnect(connection))
   
   # Create study cohort table structure:
   sql <-
@@ -36,11 +37,13 @@ createDrugExposureOverview <- function(connectionDetails,
                                 reportOverallTime = T)
 }
 
+#' @export
 getDrugExposureOverview <- function(connectionDetails,
                                     cdmDatabaseSchema,
                                     oracleTempSchema = cdmDatabaseSchema,
                                     resultsSchema) {
   connection <- DatabaseConnector::connect(connectionDetails)
+  on.exit(DatabaseConnector::disconnect(connection))
   
   # Get results
   sql <-
@@ -56,11 +59,13 @@ getDrugExposureOverview <- function(connectionDetails,
   return(DatabaseConnector::querySql(connection, sql))
 }
 
+#' @export
 getDrugExposureDistribution <- function(connectionDetails,
                                     cdmDatabaseSchema,
                                     oracleTempSchema = cdmDatabaseSchema,
                                     resultsSchema) {
   connection <- DatabaseConnector::connect(connectionDetails)
+  on.exit(DatabaseConnector::disconnect(connection))
   
   # Get results
   sql <-
@@ -76,11 +81,13 @@ getDrugExposureDistribution <- function(connectionDetails,
   return(DatabaseConnector::querySql(connection, sql))
 }
 
+#' @export
 getDrugDataPresence <- function(connectionDetails,
                                 cdmDatabaseSchema,
                                 oracleTempSchema = cdmDatabaseSchema,
                                 resultsSchema) {
   connection <- DatabaseConnector::connect(connectionDetails)
+  on.exit(DatabaseConnector::disconnect(connection))
   
   # Get results
   sql <-
