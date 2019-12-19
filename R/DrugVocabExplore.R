@@ -22,7 +22,7 @@ createDrugVocabExploration <- function(connectionDetails,
     cdmDatabaseSchema = cdmDatabaseSchema, 
     conceptIds = drugIngredientConceptIds
   )
-  if (!DrugUtilization::isConceptListOfIngredients(deConceptList, drugConceptsOfInterest)) {
+  if (!DrugUtilization::isConceptListOfIngredients(conceptList, drugConceptsOfInterest)) {
     print(knitr::kable(conceptList))
     stop("This function only supports Ingredient concepts. Please review the concept(s) above. Any concepts missing may not exist in the target vocabulary)")
   }
