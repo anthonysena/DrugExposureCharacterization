@@ -3,15 +3,31 @@ createDrugExposureOverview <- function(connectionDetails,
                                        cdmDatabaseSchema,
                                        oracleTempSchema = cdmDatabaseSchema,
                                        resultsSchema,
-                                       includeDescendants = FALSE,
-                                       drugConceptIds = c()) {
-  if (length(drugConceptIds) <= 0) {
+                                       drugIngredientConceptIds = c(),
+                                       debug = F,
+                                       debugSqlFile = "") {
+  if (length(drugIngredientConceptIds) <= 0) {
     stop("You must provide at least 1 drug concept id")
+  }
+  if (debug && debugSqlFile == "") {
+    stop("When using the debug feature, you must provide a file name for the rendered and translated SQL.")
   }
   connection <- DatabaseConnector::connect(connectionDetails)
   on.exit(DatabaseConnector::disconnect(connection))
   
-  # Create study cohort table structure:
+  # Verify that only Ingredient concepts are specified
+  conceptList <- DrugUtilization::getConcepts(
+    connection, 
+    cdmDatabaseSchema = cdmDatabaseSchema, 
+    conceptIds = drugIngredientConceptIds
+  )
+  if (!DrugUtilization::isConceptListOfIngredients(conceptList, drugConceptsOfInterest)) {
+    print(knitr::kable(conceptList))
+    stop("This function only supports Ingredient concepts. Please review the concept(s) above. Any concepts missing may not exist in the target vocabulary)")
+  }
+  
+
+  # Create the drug exposure summary results  
   sql <-
     SqlRender::loadRenderTranslateSql(
       sqlFilename = "create_drug_exposure_summary.sql",
@@ -20,85 +36,30 @@ createDrugExposureOverview <- function(connectionDetails,
       oracleTempSchema = oracleTempSchema,
       cdmDatabaseSchema = cdmDatabaseSchema,
       resultsSchema = resultsSchema,
-      insertConcepts = .insertConceptsSql(
+      insertConceptsByIngredient = .insertConceptsByIngredient(
         connection = connection,
         cdmDatabaseSchema = cdmDatabaseSchema,
-        includeDescendants = includeDescendants,
-        drugConceptIds = drugConceptIds
+        drugConceptIds = drugIngredientConceptIds
       )
     )
   
-  # For debuging TODO: remove this
-  SqlRender::writeSql(sql, "test.dsql")
-  
-  DatabaseConnector::executeSql(connection,
-                                sql,
-                                progressBar = T,
-                                reportOverallTime = T)
+  if (debug) {
+    SqlRender::writeSql(sql, debugSqlFile)
+    print(paste0("Debug file written to: ", debugSqlFile))
+  } else {
+    DatabaseConnector::executeSql(connection,
+                                  sql,
+                                  progressBar = T,
+                                  reportOverallTime = T)
+  }
 }
 
-#' @export
-getDrugExposureOverview <- function(connectionDetails,
-                                    cdmDatabaseSchema,
-                                    oracleTempSchema = cdmDatabaseSchema,
-                                    resultsSchema) {
-  connection <- DatabaseConnector::connect(connectionDetails)
-  on.exit(DatabaseConnector::disconnect(connection))
-  
-  # Get results
-  sql <-
-    SqlRender::loadRenderTranslateSql(
-      sqlFilename = "get_drug_exposure_summary.sql",
-      packageName = "DrugUtilization",
-      dbms = attr(connection, "dbms"),
-      oracleTempSchema = oracleTempSchema,
-      cdmDatabaseSchema = cdmDatabaseSchema,
-      resultsSchema = resultsSchema
-    )
-  
-  return(DatabaseConnector::querySql(connection, sql))
-}
-
-#' @export
-getDrugExposureDistribution <- function(connectionDetails,
-                                    cdmDatabaseSchema,
-                                    oracleTempSchema = cdmDatabaseSchema,
-                                    resultsSchema) {
-  connection <- DatabaseConnector::connect(connectionDetails)
-  on.exit(DatabaseConnector::disconnect(connection))
-  
-  # Get results
-  sql <-
-    SqlRender::loadRenderTranslateSql(
-      sqlFilename = "get_drug_exposure_distribution.sql",
-      packageName = "DrugUtilization",
-      dbms = attr(connection, "dbms"),
-      oracleTempSchema = oracleTempSchema,
-      cdmDatabaseSchema = cdmDatabaseSchema,
-      resultsSchema = resultsSchema
-    )
-  
-  return(DatabaseConnector::querySql(connection, sql))
-}
-
-#' @export
-getDrugDataPresence <- function(connectionDetails,
-                                cdmDatabaseSchema,
-                                oracleTempSchema = cdmDatabaseSchema,
-                                resultsSchema) {
-  connection <- DatabaseConnector::connect(connectionDetails)
-  on.exit(DatabaseConnector::disconnect(connection))
-  
-  # Get results
-  sql <-
-    SqlRender::loadRenderTranslateSql(
-      sqlFilename = "get_drug_data_presence.sql",
-      packageName = "DrugUtilization",
-      dbms = attr(connection, "dbms"),
-      oracleTempSchema = oracleTempSchema,
-      cdmDatabaseSchema = cdmDatabaseSchema,
-      resultsSchema = resultsSchema
-    )
-  
-  return(DatabaseConnector::querySql(connection, sql))
+.insertConceptsByIngredient <- function(connection, 
+                                        cdmDatabaseSchema,
+                                        drugConceptIds) {
+  return(SqlRender::loadRenderTranslateSql(sqlFilename = "insert_concepts_by_ingredient.sql", 
+                                           packageName = "DrugUtilization",
+                                           dbms = attr(connection, "dbms"),
+                                           cdmDatabaseSchema = cdmDatabaseSchema,
+                                           conceptIds = drugConceptIds));
 }

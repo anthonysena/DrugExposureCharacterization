@@ -44,3 +44,6 @@ vignettes/*.pdf
 # Error reports
 errorReport.txt
 .Rproj.user
+
+# Exported files
+*export/*
