@@ -1,0 +1,1045 @@
+{
+    "dashboards": [
+        {
+            "__Dashboard__": {
+                "css": "",
+                "dashboard_title": "Drug Exposure Dashboard",
+                "description": null,
+                "json_metadata": "{\"filter_immune_slices\": [], \"timed_refresh_immune_slices\": [], \"filter_immune_slice_fields\": {}, \"expanded_slices\": {}, \"refresh_frequency\": 0, \"default_filters\": \"{\\\"82\\\": {\\\"source_name\\\": [\\\"FRANCE DA (v1047)\\\", \\\"GERMANY DA (v1049)\\\"], \\\"ingredient_name\\\": [\\\"Nizatidine\\\"]}}\", \"remote_id\": 7}",
+                "position_json": "{\"CHART-0AftVOmiA6\":{\"children\":[],\"id\":\"CHART-0AftVOmiA6\",\"meta\":{\"chartId\":87,\"height\":63,\"sliceName\":\"Visit Type\",\"width\":6},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-U3Qp4F1gt\"],\"type\":\"CHART\"},\"CHART-2p86588P6g\":{\"children\":[],\"id\":\"CHART-2p86588P6g\",\"meta\":{\"chartId\":83,\"height\":51,\"sliceName\":\"Formulation Type\",\"width\":12},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-91eW_aEHIy\"],\"type\":\"CHART\"},\"CHART-4fJfA5qfA9\":{\"children\":[],\"id\":\"CHART-4fJfA5qfA9\",\"meta\":{\"chartId\":78,\"height\":50,\"sliceName\":\"Total Record Count By Ingredient\",\"width\":12},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-MOXsPA7WrU\"],\"type\":\"CHART\"},\"CHART-CwjBHsR7aA\":{\"children\":[],\"id\":\"CHART-CwjBHsR7aA\",\"meta\":{\"chartId\":82,\"height\":43,\"sliceName\":\"Drug Filter\",\"width\":4},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-Aw70vywNUK\",\"COLUMN-YmImrnL8He\"],\"type\":\"CHART\"},\"CHART-OS2jM-LNls\":{\"children\":[],\"id\":\"CHART-OS2jM-LNls\",\"meta\":{\"chartId\":86,\"height\":63,\"sliceName\":\"Drug Type\",\"width\":6},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-U3Qp4F1gt\"],\"type\":\"CHART\"},\"CHART-OeFXVEAGnj\":{\"children\":[],\"id\":\"CHART-OeFXVEAGnj\",\"meta\":{\"chartId\":88,\"height\":64,\"sliceName\":\"Dosage Sankey\",\"width\":12},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-tLiAKORV_\"],\"type\":\"CHART\"},\"CHART-W2UYT8cDyU\":{\"children\":[],\"id\":\"CHART-W2UYT8cDyU\",\"meta\":{\"chartId\":85,\"height\":46,\"sliceName\":\"Formulation And Dosage Detail\",\"width\":12},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-wSFHeuDHs7\"],\"type\":\"CHART\"},\"COLUMN-YmImrnL8He\":{\"children\":[\"CHART-CwjBHsR7aA\"],\"id\":\"COLUMN-YmImrnL8He\",\"meta\":{\"background\":\"BACKGROUND_TRANSPARENT\",\"width\":12},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-Aw70vywNUK\"],\"type\":\"COLUMN\"},\"DASHBOARD_VERSION_KEY\":\"v2\",\"GRID_ID\":{\"children\":[\"ROW-Aw70vywNUK\",\"ROW-MOXsPA7WrU\",\"ROW-91eW_aEHIy\",\"ROW-tLiAKORV_\",\"ROW-wSFHeuDHs7\",\"ROW-U3Qp4F1gt\"],\"id\":\"GRID_ID\",\"parents\":[\"ROOT_ID\"],\"type\":\"GRID\"},\"HEADER_ID\":{\"id\":\"HEADER_ID\",\"meta\":{\"text\":\"Drug Exposure Dashboard\"},\"type\":\"HEADER\"},\"ROOT_ID\":{\"children\":[\"GRID_ID\"],\"id\":\"ROOT_ID\",\"type\":\"ROOT\"},\"ROW-91eW_aEHIy\":{\"children\":[\"CHART-2p86588P6g\"],\"id\":\"ROW-91eW_aEHIy\",\"meta\":{\"background\":\"BACKGROUND_TRANSPARENT\"},\"parents\":[\"ROOT_ID\",\"GRID_ID\"],\"type\":\"ROW\"},\"ROW-Aw70vywNUK\":{\"children\":[\"COLUMN-YmImrnL8He\"],\"id\":\"ROW-Aw70vywNUK\",\"meta\":{\"background\":\"BACKGROUND_TRANSPARENT\"},\"parents\":[\"ROOT_ID\",\"GRID_ID\"],\"type\":\"ROW\"},\"ROW-MOXsPA7WrU\":{\"children\":[\"CHART-4fJfA5qfA9\"],\"id\":\"ROW-MOXsPA7WrU\",\"meta\":{\"background\":\"BACKGROUND_TRANSPARENT\"},\"parents\":[\"ROOT_ID\",\"GRID_ID\"],\"type\":\"ROW\"},\"ROW-U3Qp4F1gt\":{\"children\":[\"CHART-OS2jM-LNls\",\"CHART-0AftVOmiA6\"],\"id\":\"ROW-U3Qp4F1gt\",\"meta\":{\"background\":\"BACKGROUND_TRANSPARENT\"},\"parents\":[\"ROOT_ID\",\"GRID_ID\"],\"type\":\"ROW\"},\"ROW-tLiAKORV_\":{\"children\":[\"CHART-OeFXVEAGnj\"],\"id\":\"ROW-tLiAKORV_\",\"meta\":{\"background\":\"BACKGROUND_TRANSPARENT\"},\"parents\":[\"ROOT_ID\",\"GRID_ID\"],\"type\":\"ROW\"},\"ROW-wSFHeuDHs7\":{\"children\":[\"CHART-W2UYT8cDyU\"],\"id\":\"ROW-wSFHeuDHs7\",\"meta\":{\"background\":\"BACKGROUND_TRANSPARENT\"},\"parents\":[\"ROOT_ID\",\"GRID_ID\"],\"type\":\"ROW\"}}",
+                "slices": [
+                    {
+                        "__Slice__": {
+                            "cache_timeout": null,
+                            "datasource_name": "public.v_drug_exposure_overview",
+                            "datasource_type": "table",
+                            "id": 78,
+                            "params": "{\"adhoc_filters\": [], \"bar_stacked\": true, \"bottom_margin\": \"auto\", \"color_scheme\": \"bnbColors\", \"columns\": [\"source_name\"], \"contribution\": true, \"datasource\": \"14__table\", \"granularity_sqla\": \"min_start_date\", \"groupby\": [\"ingredient_name\"], \"label_colors\": {}, \"metrics\": [{\"aggregate\": \"SUM\", \"column\": {\"column_name\": \"tot_rec_cnt\", \"description\": null, \"expression\": null, \"filterable\": true, \"groupby\": true, \"id\": 458, \"is_dttm\": false, \"optionName\": \"_col_tot_rec_cnt\", \"python_date_format\": null, \"type\": \"BIGINT\", \"verbose_name\": null}, \"expressionType\": \"SIMPLE\", \"fromFormData\": false, \"hasCustomLabel\": false, \"label\": \"SUM(tot_rec_cnt)\", \"optionName\": \"metric_huy46jf1ch_44egdawtqpm\", \"sqlExpression\": null}], \"order_bars\": true, \"reduce_x_ticks\": false, \"row_limit\": 10000, \"show_bar_value\": false, \"show_controls\": false, \"show_legend\": true, \"slice_id\": 78, \"time_grain_sqla\": \"P1Y\", \"time_range\": \"No filter\", \"url_params\": {}, \"viz_type\": \"dist_bar\", \"x_axis_label\": \"\", \"x_ticks_layout\": \"auto\", \"y_axis_format\": \"SMART_NUMBER\", \"y_axis_label\": \"Total Records\", \"remote_id\": 78, \"datasource_name\": \"v_drug_exposure_overview\", \"schema\": \"public\", \"database_name\": \"dus\"}",
+                            "slice_name": "Total Record Count By Ingredient",
+                            "viz_type": "dist_bar"
+                        }
+                    },
+                    {
+                        "__Slice__": {
+                            "cache_timeout": null,
+                            "datasource_name": "public.v_drug_exposure_detail",
+                            "datasource_type": "table",
+                            "id": 82,
+                            "params": "{\"adhoc_filters\": [], \"datasource\": \"16__table\", \"date_filter\": false, \"filter_configs\": [{\"asc\": true, \"clearable\": true, \"column\": \"source_name\", \"key\": \"YwxVu1G2H\", \"label\": \"Database\", \"multiple\": true}, {\"asc\": true, \"clearable\": true, \"column\": \"ingredient_name\", \"key\": \"HeH74m-j7\", \"label\": \"Ingredient\", \"multiple\": true}, {\"asc\": true, \"clearable\": true, \"column\": \"dose_form\", \"key\": \"5xAgQeb34\", \"label\": \"Formulation\", \"multiple\": true}, {\"asc\": true, \"clearable\": true, \"column\": \"drug_type\", \"key\": \"XiZG3jYjP\", \"label\": \"Drug Type\", \"multiple\": true}, {\"asc\": true, \"clearable\": true, \"column\": \"visit_type\", \"key\": \"w69xqm1dG\", \"label\": \"Visit Type\", \"multiple\": true}], \"granularity_sqla\": \"min_start_date\", \"instant_filtering\": true, \"show_druid_time_granularity\": false, \"show_druid_time_origin\": false, \"show_sqla_time_column\": false, \"show_sqla_time_granularity\": false, \"slice_id\": 82, \"time_grain_sqla\": \"P1D\", \"time_range\": \"No filter\", \"url_params\": {}, \"viz_type\": \"filter_box\", \"remote_id\": 82, \"datasource_name\": \"v_drug_exposure_detail\", \"schema\": \"public\", \"database_name\": \"dus\"}",
+                            "slice_name": "Drug Filter",
+                            "viz_type": "filter_box"
+                        }
+                    },
+                    {
+                        "__Slice__": {
+                            "cache_timeout": null,
+                            "datasource_name": "public.v_drug_exposure_overview",
+                            "datasource_type": "table",
+                            "id": 83,
+                            "params": "{\"adhoc_filters\": [], \"bar_stacked\": true, \"bottom_margin\": \"auto\", \"color_scheme\": \"bnbColors\", \"columns\": [\"dose_form\"], \"contribution\": true, \"datasource\": \"14__table\", \"granularity_sqla\": \"min_start_date\", \"groupby\": [\"ingredient_name\", \"source_name\"], \"label_colors\": {}, \"metrics\": [{\"aggregate\": \"SUM\", \"column\": {\"column_name\": \"tot_rec_cnt\", \"description\": null, \"expression\": null, \"filterable\": true, \"groupby\": true, \"id\": 458, \"is_dttm\": false, \"optionName\": \"_col_tot_rec_cnt\", \"python_date_format\": null, \"type\": \"BIGINT\", \"verbose_name\": null}, \"expressionType\": \"SIMPLE\", \"fromFormData\": false, \"hasCustomLabel\": false, \"label\": \"SUM(tot_rec_cnt)\", \"optionName\": \"metric_tsmeks6u25d_solckt1qppm\", \"sqlExpression\": null}], \"order_bars\": true, \"reduce_x_ticks\": false, \"row_limit\": 10000, \"show_bar_value\": false, \"show_controls\": false, \"show_legend\": true, \"slice_id\": 83, \"time_grain_sqla\": \"P1D\", \"time_range\": \"No filter\", \"url_params\": {}, \"viz_type\": \"dist_bar\", \"x_axis_label\": \"\", \"x_ticks_layout\": \"auto\", \"y_axis_format\": \"SMART_NUMBER\", \"y_axis_label\": \"\", \"remote_id\": 83, \"datasource_name\": \"v_drug_exposure_overview\", \"schema\": \"public\", \"database_name\": \"dus\"}",
+                            "slice_name": "Formulation Type",
+                            "viz_type": "dist_bar"
+                        }
+                    },
+                    {
+                        "__Slice__": {
+                            "cache_timeout": null,
+                            "datasource_name": "public.v_drug_exposure_overview",
+                            "datasource_type": "table",
+                            "id": 85,
+                            "params": "{\"adhoc_filters\": [], \"align_pn\": false, \"all_columns\": [], \"color_pn\": true, \"datasource\": \"14__table\", \"granularity_sqla\": \"min_start_date\", \"groupby\": [\"source_name\", \"ingredient_name\", \"dose_form\", \"strength_formatted\"], \"include_search\": false, \"include_time\": false, \"metrics\": [{\"aggregate\": \"SUM\", \"column\": {\"column_name\": \"tot_rec_cnt\", \"description\": null, \"expression\": null, \"filterable\": true, \"groupby\": true, \"id\": 458, \"is_dttm\": false, \"optionName\": \"_col_tot_rec_cnt\", \"python_date_format\": null, \"type\": \"BIGINT\", \"verbose_name\": null}, \"expressionType\": \"SIMPLE\", \"fromFormData\": false, \"hasCustomLabel\": false, \"label\": \"SUM(tot_rec_cnt)\", \"optionName\": \"metric_96bxiohrd27_u9uk4dtuul\", \"sqlExpression\": null}], \"order_by_cols\": [], \"order_desc\": true, \"page_length\": 0, \"percent_metrics\": [{\"aggregate\": \"SUM\", \"column\": {\"column_name\": \"tot_rec_cnt\", \"description\": null, \"expression\": null, \"filterable\": true, \"groupby\": true, \"id\": 458, \"is_dttm\": false, \"optionName\": \"_col_tot_rec_cnt\", \"python_date_format\": null, \"type\": \"BIGINT\", \"verbose_name\": null}, \"expressionType\": \"SIMPLE\", \"fromFormData\": false, \"hasCustomLabel\": false, \"label\": \"SUM(tot_rec_cnt)\", \"optionName\": \"metric_dckqlj61k2k_jpzrryz81fk\", \"sqlExpression\": null}], \"row_limit\": 10000, \"slice_id\": 85, \"table_filter\": false, \"table_timestamp_format\": \"%Y-%m-%d %H:%M:%S\", \"time_grain_sqla\": \"P1D\", \"time_range\": \"No filter\", \"timeseries_limit_metric\": null, \"url_params\": {}, \"viz_type\": \"table\", \"remote_id\": 85, \"datasource_name\": \"v_drug_exposure_overview\", \"schema\": \"public\", \"database_name\": \"dus\"}",
+                            "slice_name": "Formulation And Strength Detail",
+                            "viz_type": "table"
+                        }
+                    },
+                    {
+                        "__Slice__": {
+                            "cache_timeout": null,
+                            "datasource_name": "public.v_drug_exposure_detail",
+                            "datasource_type": "table",
+                            "id": 86,
+                            "params": "{\"adhoc_filters\": [], \"bar_stacked\": true, \"bottom_margin\": \"auto\", \"color_scheme\": \"bnbColors\", \"columns\": [\"drug_type\"], \"contribution\": true, \"datasource\": \"16__table\", \"granularity_sqla\": \"min_start_date\", \"groupby\": [\"ingredient_name\"], \"label_colors\": {}, \"metrics\": [{\"aggregate\": \"SUM\", \"column\": {\"column_name\": \"tot_rec_cnt\", \"description\": null, \"expression\": null, \"filterable\": true, \"groupby\": true, \"id\": 491, \"is_dttm\": false, \"optionName\": \"_col_tot_rec_cnt\", \"python_date_format\": null, \"type\": \"BIGINT\", \"verbose_name\": null}, \"expressionType\": \"SIMPLE\", \"fromFormData\": false, \"hasCustomLabel\": false, \"label\": \"SUM(tot_rec_cnt)\", \"optionName\": \"metric_9cuonuzzo6j_5w3ukb62smc\", \"sqlExpression\": null}], \"order_bars\": false, \"reduce_x_ticks\": false, \"row_limit\": 10000, \"show_bar_value\": false, \"show_controls\": false, \"show_legend\": true, \"slice_id\": 86, \"time_grain_sqla\": \"P1D\", \"time_range\": \"No filter\", \"url_params\": {}, \"viz_type\": \"dist_bar\", \"x_axis_label\": \"\", \"x_ticks_layout\": \"auto\", \"y_axis_format\": \"SMART_NUMBER\", \"y_axis_label\": \"\", \"remote_id\": 86, \"datasource_name\": \"v_drug_exposure_detail\", \"schema\": \"public\", \"database_name\": \"dus\"}",
+                            "slice_name": "Drug Type",
+                            "viz_type": "dist_bar"
+                        }
+                    },
+                    {
+                        "__Slice__": {
+                            "cache_timeout": null,
+                            "datasource_name": "public.v_drug_exposure_detail",
+                            "datasource_type": "table",
+                            "id": 87,
+                            "params": "{\"adhoc_filters\": [], \"color_scheme\": \"bnbColors\", \"datasource\": \"16__table\", \"donut\": true, \"granularity_sqla\": \"min_start_date\", \"groupby\": [\"visit_type\"], \"label_colors\": {}, \"labels_outside\": true, \"metric\": {\"aggregate\": \"SUM\", \"column\": {\"column_name\": \"tot_rec_cnt\", \"description\": null, \"expression\": null, \"filterable\": true, \"groupby\": true, \"id\": 491, \"is_dttm\": false, \"optionName\": \"_col_tot_rec_cnt\", \"python_date_format\": null, \"type\": \"BIGINT\", \"verbose_name\": null}, \"expressionType\": \"SIMPLE\", \"fromFormData\": false, \"hasCustomLabel\": false, \"label\": \"SUM(tot_rec_cnt)\", \"optionName\": \"metric_g3sju9s77r_0mrnu1bx3bd\", \"sqlExpression\": null}, \"number_format\": \"SMART_NUMBER\", \"pie_label_type\": \"key_percent\", \"row_limit\": 10000, \"show_labels\": true, \"show_legend\": false, \"time_grain_sqla\": \"P1D\", \"time_range\": \"No filter\", \"url_params\": {}, \"viz_type\": \"pie\", \"remote_id\": 87, \"datasource_name\": \"v_drug_exposure_detail\", \"schema\": \"public\", \"database_name\": \"dus\"}",
+                            "slice_name": "Visit Type",
+                            "viz_type": "pie"
+                        }
+                    },
+                    {
+                        "__Slice__": {
+                            "cache_timeout": null,
+                            "datasource_name": "public.v_drug_exposure_detail",
+                            "datasource_type": "table",
+                            "id": 88,
+                            "params": "{\"adhoc_filters\": [], \"color_scheme\": \"SUPERSET_DEFAULT\", \"datasource\": \"16__table\", \"granularity_sqla\": \"min_start_date\", \"groupby\": [\"ingredient_name\", \"strength_formatted\"], \"label_colors\": {}, \"metric\": {\"aggregate\": \"SUM\", \"column\": {\"column_name\": \"tot_rec_cnt\", \"description\": null, \"expression\": null, \"filterable\": true, \"groupby\": true, \"id\": 491, \"is_dttm\": false, \"optionName\": \"_col_tot_rec_cnt\", \"python_date_format\": null, \"type\": \"BIGINT\", \"verbose_name\": null}, \"expressionType\": \"SIMPLE\", \"fromFormData\": false, \"hasCustomLabel\": false, \"label\": \"SUM(tot_rec_cnt)\", \"optionName\": \"metric_mhwingnee8q_yfg9mdlo479\", \"sqlExpression\": null}, \"row_limit\": 10, \"slice_id\": 88, \"time_grain_sqla\": \"P1D\", \"time_range\": \"No filter\", \"url_params\": {}, \"viz_type\": \"sankey\", \"remote_id\": 88, \"datasource_name\": \"v_drug_exposure_detail\", \"schema\": \"public\", \"database_name\": \"dus\"}",
+                            "slice_name": "Strength Sankey",
+                            "viz_type": "sankey"
+                        }
+                    }
+                ],
+                "slug": null
+            }
+        }
+    ],
+    "datasources": [
+        {
+            "__SqlaTable__": {
+                "cache_timeout": null,
+                "columns": [
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T10:57:32"
+                            },
+                            "column_name": "source_id",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T10:48:28"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 456,
+                            "is_active": null,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 14,
+                            "type": "INTEGER",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T10:57:32"
+                            },
+                            "column_name": "drug_concept_id",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T10:48:28"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 457,
+                            "is_active": null,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 14,
+                            "type": "INTEGER",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T10:57:32"
+                            },
+                            "column_name": "tot_rec_cnt",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T10:48:28"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 458,
+                            "is_active": null,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 14,
+                            "type": "BIGINT",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T10:57:32"
+                            },
+                            "column_name": "tot_person_cnt",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T10:48:28"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 459,
+                            "is_active": null,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 14,
+                            "type": "BIGINT",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T10:57:32"
+                            },
+                            "column_name": "min_start_date",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T10:48:28"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 460,
+                            "is_active": null,
+                            "is_dttm": true,
+                            "python_date_format": null,
+                            "table_id": 14,
+                            "type": "TIMESTAMP WITHOUT TIME ZONE",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T10:57:32"
+                            },
+                            "column_name": "max_start_date",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T10:48:28"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 461,
+                            "is_active": null,
+                            "is_dttm": true,
+                            "python_date_format": null,
+                            "table_id": 14,
+                            "type": "TIMESTAMP WITHOUT TIME ZONE",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T11:03:52"
+                            },
+                            "column_name": "ingredient_concept_id",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T10:58:16"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 462,
+                            "is_active": null,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 14,
+                            "type": "INTEGER",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T11:03:52"
+                            },
+                            "column_name": "ingredient_name",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T10:58:16"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 463,
+                            "is_active": null,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 14,
+                            "type": "VARCHAR(255)",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T11:03:52"
+                            },
+                            "column_name": "drug_name",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T10:58:16"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 464,
+                            "is_active": null,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 14,
+                            "type": "VARCHAR(255)",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T11:03:52"
+                            },
+                            "column_name": "dose_form_concept_id",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T10:58:16"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 465,
+                            "is_active": null,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 14,
+                            "type": "INTEGER",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T11:03:52"
+                            },
+                            "column_name": "dose_form",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T10:58:16"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 466,
+                            "is_active": null,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 14,
+                            "type": "VARCHAR",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T16:51:20"
+                            },
+                            "column_name": "source_name",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T11:03:52"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 469,
+                            "is_active": null,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 14,
+                            "type": "VARCHAR(255)",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T16:51:20"
+                            },
+                            "column_name": "strength",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T16:51:20"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 515,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 14,
+                            "type": "NUMERIC",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T16:51:20"
+                            },
+                            "column_name": "strength_formatted",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T16:51:20"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 516,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 14,
+                            "type": "TEXT",
+                            "verbose_name": null
+                        }
+                    }
+                ],
+                "database_id": 4,
+                "default_endpoint": null,
+                "description": null,
+                "fetch_values_predicate": null,
+                "filter_select_enabled": false,
+                "main_dttm_col": "min_start_date",
+                "metrics": [
+                    {
+                        "__SqlMetric__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T10:57:32"
+                            },
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T10:48:28"
+                            },
+                            "d3format": null,
+                            "description": null,
+                            "expression": "COUNT(*)",
+                            "id": 22,
+                            "is_restricted": null,
+                            "metric_name": "count",
+                            "metric_type": null,
+                            "table_id": 14,
+                            "verbose_name": "COUNT(*)",
+                            "warning_text": null
+                        }
+                    }
+                ],
+                "offset": 0,
+                "params": "{\"remote_id\": 14, \"database_name\": \"dus\"}",
+                "schema": "public",
+                "sql": null,
+                "table_name": "v_drug_exposure_overview",
+                "template_params": null
+            }
+        },
+        {
+            "__SqlaTable__": {
+                "cache_timeout": null,
+                "columns": [
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T16:50:20"
+                            },
+                            "column_name": "source_id",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T12:52:11"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 473,
+                            "is_active": null,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 16,
+                            "type": "INTEGER",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T16:50:20"
+                            },
+                            "column_name": "source_name",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T12:52:11"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 474,
+                            "is_active": null,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 16,
+                            "type": "VARCHAR(255)",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T16:50:20"
+                            },
+                            "column_name": "ingredient_concept_id",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T12:52:11"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 475,
+                            "is_active": null,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 16,
+                            "type": "INTEGER",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T16:50:20"
+                            },
+                            "column_name": "ingredient_name",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T12:52:11"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 476,
+                            "is_active": null,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 16,
+                            "type": "VARCHAR(255)",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T16:50:20"
+                            },
+                            "column_name": "drug_concept_id",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T12:52:11"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 477,
+                            "is_active": null,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 16,
+                            "type": "INTEGER",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T16:50:20"
+                            },
+                            "column_name": "drug_name",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T12:52:11"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 478,
+                            "is_active": null,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 16,
+                            "type": "VARCHAR(255)",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T16:50:20"
+                            },
+                            "column_name": "drug_type_concept_id",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T12:52:11"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 479,
+                            "is_active": null,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 16,
+                            "type": "INTEGER",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T16:50:20"
+                            },
+                            "column_name": "drug_type",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T12:52:11"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 480,
+                            "is_active": null,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 16,
+                            "type": "VARCHAR(255)",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T16:50:20"
+                            },
+                            "column_name": "visit_type_concept_id",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T12:52:11"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 481,
+                            "is_active": null,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 16,
+                            "type": "INTEGER",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T16:50:20"
+                            },
+                            "column_name": "visit_type",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T12:52:11"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 482,
+                            "is_active": null,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 16,
+                            "type": "VARCHAR(255)",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T16:50:20"
+                            },
+                            "column_name": "drug_source_concept_id",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T12:52:11"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 483,
+                            "is_active": null,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 16,
+                            "type": "INTEGER",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T16:50:20"
+                            },
+                            "column_name": "drug_source_vocab",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T12:52:11"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 484,
+                            "is_active": null,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 16,
+                            "type": "VARCHAR(20)",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T16:50:20"
+                            },
+                            "column_name": "drug_source_name",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T12:52:11"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 485,
+                            "is_active": null,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 16,
+                            "type": "VARCHAR(255)",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T16:50:20"
+                            },
+                            "column_name": "drug_source_code",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T12:52:11"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 486,
+                            "is_active": null,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 16,
+                            "type": "VARCHAR(50)",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T16:50:20"
+                            },
+                            "column_name": "dose_form_concept_id",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T12:52:11"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 487,
+                            "is_active": null,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 16,
+                            "type": "INTEGER",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T16:50:20"
+                            },
+                            "column_name": "dose_form",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T12:52:11"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 488,
+                            "is_active": null,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 16,
+                            "type": "VARCHAR",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T16:50:20"
+                            },
+                            "column_name": "tot_rec_cnt",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T12:52:11"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 491,
+                            "is_active": null,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 16,
+                            "type": "BIGINT",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T16:50:20"
+                            },
+                            "column_name": "tot_person_cnt",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T12:52:11"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 492,
+                            "is_active": null,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 16,
+                            "type": "BIGINT",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T16:50:20"
+                            },
+                            "column_name": "min_start_date",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T12:52:11"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 493,
+                            "is_active": null,
+                            "is_dttm": true,
+                            "python_date_format": null,
+                            "table_id": 16,
+                            "type": "TIMESTAMP WITHOUT TIME ZONE",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T16:50:20"
+                            },
+                            "column_name": "max_start_date",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T12:52:11"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 494,
+                            "is_active": null,
+                            "is_dttm": true,
+                            "python_date_format": null,
+                            "table_id": 16,
+                            "type": "TIMESTAMP WITHOUT TIME ZONE",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T16:50:20"
+                            },
+                            "column_name": "strength",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T16:50:20"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 513,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 16,
+                            "type": "NUMERIC",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T16:50:20"
+                            },
+                            "column_name": "strength_formatted",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T16:50:20"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 514,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 16,
+                            "type": "TEXT",
+                            "verbose_name": null
+                        }
+                    }
+                ],
+                "database_id": 4,
+                "default_endpoint": null,
+                "description": null,
+                "fetch_values_predicate": null,
+                "filter_select_enabled": false,
+                "main_dttm_col": "min_start_date",
+                "metrics": [
+                    {
+                        "__SqlMetric__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2020-01-02T16:50:20"
+                            },
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2020-01-02T12:52:11"
+                            },
+                            "d3format": null,
+                            "description": null,
+                            "expression": "COUNT(*)",
+                            "id": 24,
+                            "is_restricted": null,
+                            "metric_name": "count",
+                            "metric_type": null,
+                            "table_id": 16,
+                            "verbose_name": "COUNT(*)",
+                            "warning_text": null
+                        }
+                    }
+                ],
+                "offset": 0,
+                "params": "{\"remote_id\": 16, \"database_name\": \"dus\"}",
+                "schema": "public",
+                "sql": null,
+                "table_name": "v_drug_exposure_detail",
+                "template_params": null
+            }
+        }
+    ]
+}
