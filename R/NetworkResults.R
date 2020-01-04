@@ -7,3 +7,13 @@ getNetworkResultsDDLSql <- function(networkSchema = "public") {
     networkSchema = networkSchema
   ))
 }
+
+#' @export
+getNetworkResultsViewSql <- function(networkSchema = "public") {
+  pathToSql <-
+    system.file("sql/postgresql/networkSchemaView.sql", package = "DrugUtilization")
+  return(SqlRender::render(
+    sql = SqlRender::readSql(pathToSql),
+    networkSchema = networkSchema
+  ))
+}

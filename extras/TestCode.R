@@ -94,10 +94,15 @@ networkDbConnectionDetails <-
 networkDbConnection <- DatabaseConnector::connect(networkDbConnectionDetails)
 networkSchema <- Sys.getenv("NETWORK_SCHEMA")
 
-# Establish the network schema
+# Establish the network schema's tables
 networkDDLSql <- DrugUtilization::getNetworkResultsDDLSql(networkSchema = networkSchema)
 SqlRender::writeSql(sql=networkDDLSql, "network.sql")
 DatabaseConnector::executeSql(connection = networkDbConnection, sql = networkDDLSql)
+
+# Establish the network schema's views
+networkViewSql <- DrugUtilization::getNetworkResultsViewSql(networkSchema = networkSchema)
+SqlRender::writeSql(sql=networkViewSql, "network_views.sql")
+DatabaseConnector::executeSql(connection = networkDbConnection, sql = networkViewSql)
 
 # Loop through the results and load to the network database --------------
 # Get the folders in the output
@@ -124,6 +129,7 @@ dfDeDataPresenceColClasses=c("integer",
                              "character",
                              "integer",
                              "integer",
+                             "integer",
                              "Date",
                              "Date"
                              )
@@ -148,6 +154,7 @@ dfDeOverviewColClasses=c("integer",
 )
 dfDeOverview <- data.frame()
 dfDrugConceptXrefColClasses=c("integer",
+                              "integer",
                               "integer",
                               "integer",
                               "integer",

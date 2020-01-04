@@ -19,6 +19,8 @@ INNER JOIN  (
 	UNION ALL
 	SELECT DISTINCT dose_form_concept_id FROM @resultsSchema.dus_drug_concept_xref
 	UNION ALL
+	SELECT DISTINCT dose_form_group_concept_id FROM @resultsSchema.dus_drug_concept_xref
+	UNION ALL
 	SELECT DISTINCT amount_unit_concept_id FROM @resultsSchema.dus_drug_concept_xref
 	UNION ALL
 	SELECT DISTINCT numerator_unit_concept_id FROM @resultsSchema.dus_drug_concept_xref
