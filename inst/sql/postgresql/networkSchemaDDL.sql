@@ -52,6 +52,7 @@ CREATE TABLE @networkSchema.de_data_presence (
   quantity NUMERIC NULL,
   sig TEXT NULL,
   drug_exposure_end_date_spec INT NULL,
+  duration_days INT NULL,
   tot_rec_cnt BIGINT NOT NULL, 
   tot_person_cnt BIGINT NOT NULL,
   min_start_date TIMESTAMP NOT NULL,

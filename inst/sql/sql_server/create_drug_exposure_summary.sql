@@ -1,4 +1,21 @@
-@insertConceptsByIngredient
+CREATE TABLE #CONCEPTS_INGRED (
+  ingredient_concept_id  BIGINT     NOT NULL,
+  concept_id			       BIGINT			NOT NULL
+)
+;
+
+INSERT INTO #CONCEPTS_INGRED ( 
+  ingredient_concept_id,
+  concept_id
+)
+SELECT DISTINCT 
+  ca.ancestor_concept_id ingredient_concept_id,
+  c.concept_id
+from @cdmDatabaseSchema.concept_ancestor ca
+inner join @cdmDatabaseSchema.concept c ON ca.descendant_concept_id = c.concept_id
+where ca.ancestor_concept_id IN (@drugIngredientConceptIds)
+;
+
 
 -- Concepts in this table will be given priority
 -- when joining to the concept_ancestor table
@@ -111,11 +128,12 @@ WITH all_dose_form as (
   LEFT JOIN @cdmDatabaseSchema.concept_relationship cr
       ON cr.concept_id_1 = ci.concept_id
   	AND cr.relationship_id = 'RxNorm has dose form'
-  LEFT JOIN @cdmDatabaseSchema.concept_ancestor ca
-      ON ca.descendant_concept_id = ci.concept_id
+  LEFT JOIN @cdmDatabaseSchema.concept_relationship cr2
+      ON cr.concept_id_2 = cr2.concept_id_1
+  	AND cr2.relationship_id = 'RxNorm is a'
   LEFT JOIN @cdmDatabaseSchema.concept c 
-      ON ca.ancestor_concept_id = c.concept_id
-    AND c.concept_class_id = 'Dose Form Group'
+  	ON c.concept_id = cr2.concept_id_2
+      AND c.concept_class_id = 'Dose Form Group'
   LEFT JOIN #DOSE_FORM_GROUP dfg 
     ON c.concept_id = dfg.dose_form_group_concept_id
 ), dfPrioritized AS (
@@ -202,6 +220,7 @@ CREATE TABLE @resultsSchema.dus_de_data_presence (
   quantity FLOAT NULL,
   sig VARCHAR(MAX) NULL,
   drug_exposure_end_date_spec INT NULL,
+  duration_days INT NULL,
   tot_rec_cnt BIGINT NOT NULL, 
   tot_person_cnt BIGINT NOT NULL,
   min_start_date DATETIME NOT NULL,
@@ -214,6 +233,7 @@ INSERT INTO  @resultsSchema.dus_de_data_presence (
   quantity,
   sig,
   drug_exposure_end_date_spec,
+  duration_days,
   tot_rec_cnt,
   tot_person_cnt,
   min_start_date,
@@ -225,6 +245,10 @@ SELECT
   de.quantity,
   de.sig,
   CASE WHEN de.drug_exposure_end_date IS NULL THEN 0 ELSE 1 END drug_exposure_end_date_spec,
+  CASE 
+    WHEN de.drug_exposure_end_date IS NULL THEN NULL 
+    ELSE DATEDIFF(dd, DATEADD(dd, 1, de.drug_exposure_start_date), de.drug_exposure_end_date)
+  END duration_days,
   COUNT(*) tot_rec_cnt,
   COUNT(DISTINCT de.person_id) tot_person_cnt,
   MIN(de.drug_exposure_start_date) min_start_date,
@@ -236,8 +260,15 @@ GROUP BY
   de.days_supply,
   de.quantity,
   de.sig,
-  CASE WHEN de.drug_exposure_end_date IS NULL THEN -1 ELSE 1 END
+  CASE WHEN de.drug_exposure_end_date IS NULL THEN 0 ELSE 1 END,
+  CASE 
+    WHEN de.drug_exposure_end_date IS NULL THEN NULL 
+    ELSE DATEDIFF(dd, DATEADD(dd, 1, de.drug_exposure_start_date), de.drug_exposure_end_date)
+  END
 ;
+
+TRUNCATE TABLE #CONCEPTS_INGRED;
+DROP TABLE #CONCEPTS_INGRED;
 
 TRUNCATE TABLE #DOSE_FORM_GROUP;
 DROP TABLE #DOSE_FORM_GROUP;

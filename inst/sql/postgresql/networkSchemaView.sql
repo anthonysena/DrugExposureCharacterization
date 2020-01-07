@@ -65,6 +65,7 @@ CREATE VIEW @networkSchema.v_drug_exposure_data_presence AS
             WHEN ((COALESCE(de.days_supply, 0) > 0) AND (de.days_supply <> 0)) THEN ((x.strength * de.quantity) / (de.days_supply)::numeric)
             ELSE (1)::numeric
         END AS daily_dose,
+    de.duration_days,
     x.dose_form_concept_id,
     x.dose_form,
     x.dose_form_group_concept_id,
@@ -149,11 +150,12 @@ SELECT
 	ingredient_name,
 	drug_concept_id,
 	drug_name,
-	CASE WHEN days_supply IS NULL THEN -1 WHEN days_supply = 0 THEN 0 ELSE 1 END days_supply_spec,
-	CASE WHEN quantity IS NULL THEN -1 WHEN quantity = 0 THEN 0 ELSE 1 END quantity_spec,
-	CASE WHEN sig IS NULL THEN -1 ELSE 1 END sig_spec,
-	CASE WHEN drug_exposure_end_date_spec <= 0 THEN -1 ELSE 1 END drug_exposure_end_date_spec,
-	CASE WHEN strength <= 0 THEN -1 ELSE 1 END strength_spec,
+	CASE WHEN COALESCE(days_supply, 0) = 0 THEN 0 ELSE 1 END days_supply_spec,
+	CASE WHEN COALESCE(quantity, 0) = 0 THEN 0 ELSE 1 END quantity_spec,
+	CASE WHEN COALESCE(sig, '') = '' THEN 0 ELSE 1 END sig_spec,
+	CASE WHEN drug_exposure_end_date_spec <= 0 THEN 0 ELSE 1 END drug_exposure_end_date_spec,
+	CASE WHEN strength <= 0 THEN 0 ELSE 1 END strength_spec,
+	CASE WHEN COALESCE(duration_days, 0) = 0 THEN 0 ELSE 1 END duration_days_spec,
 	SUM(tot_rec_cnt) tot_rec_cnt,
 	SUM(tot_person_cnt) tot_person_cnt
 FROM @networkSchema.v_drug_exposure_data_presence 
@@ -164,10 +166,11 @@ GROUP BY
 	ingredient_name,
 	drug_concept_id,
 	drug_name,
-	CASE WHEN days_supply IS NULL THEN -1 WHEN days_supply = 0 THEN 0 ELSE 1 END,
-	CASE WHEN quantity IS NULL THEN -1 WHEN quantity = 0 THEN 0 ELSE 1 END,
-	CASE WHEN sig IS NULL THEN -1 ELSE 1 END,
-	CASE WHEN drug_exposure_end_date_spec <= 0 THEN -1 ELSE 1 END,
-	CASE WHEN strength <= 0 THEN -1 ELSE 1 END
+	CASE WHEN COALESCE(days_supply, 0) = 0 THEN 0 ELSE 1 END,
+	CASE WHEN COALESCE(quantity, 0) = 0 THEN 0 ELSE 1 END,
+	CASE WHEN COALESCE(sig, '') = '' THEN 0 ELSE 1 END,
+	CASE WHEN drug_exposure_end_date_spec <= 0 THEN 0 ELSE 1 END,
+	CASE WHEN strength <= 0 THEN 0 ELSE 1 END,
+	CASE WHEN COALESCE(duration_days, 0) = 0 THEN 0 ELSE 1 END
 order by ingredient_name, source_name, SUM(tot_rec_cnt) desc
 ;

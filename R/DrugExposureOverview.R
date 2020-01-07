@@ -36,11 +36,7 @@ createDrugExposureOverview <- function(connectionDetails,
       oracleTempSchema = oracleTempSchema,
       cdmDatabaseSchema = cdmDatabaseSchema,
       resultsSchema = resultsSchema,
-      insertConceptsByIngredient = .insertConceptsByIngredient(
-        connection = connection,
-        cdmDatabaseSchema = cdmDatabaseSchema,
-        drugConceptIds = drugIngredientConceptIds
-      )
+      drugIngredientConceptIds = drugIngredientConceptIds
     )
   
   if (debug) {
@@ -52,14 +48,4 @@ createDrugExposureOverview <- function(connectionDetails,
                                   progressBar = T,
                                   reportOverallTime = T)
   }
-}
-
-.insertConceptsByIngredient <- function(connection, 
-                                        cdmDatabaseSchema,
-                                        drugConceptIds) {
-  return(SqlRender::loadRenderTranslateSql(sqlFilename = "insert_concepts_by_ingredient.sql", 
-                                           packageName = "DrugUtilization",
-                                           dbms = attr(connection, "dbms"),
-                                           cdmDatabaseSchema = cdmDatabaseSchema,
-                                           conceptIds = drugConceptIds));
 }

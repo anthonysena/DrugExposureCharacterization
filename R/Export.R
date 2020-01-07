@@ -114,19 +114,12 @@ exportResultsToCSV <- function(connectionDetails,
 }
 
 .writeCSV <- function (tableData, tableName, exportFolder, sourceId = NULL) {
+  exportFileName <- file.path(exportFolder, paste0(tableName, ".csv"))
+  if (nrow(tableData) <= 0) {
+    tableData[nrow(tableData)+1,] <- NA;
+  }
   if (!is.null(sourceId)) {
     tableData <- cbind(SOURCE_ID = sourceId, tableData)
   }
-  exportFileName <- file.path(exportFolder, paste0(tableName, ".csv"))
-  if (nrow(tableData) > 0) {
-    # write.table(
-    #   cbind(sourceId, tableData),
-    #   file = exportFileName,
-    #   sep = ",",
-    #   col.names = F,
-    #   row.names = F,
-    #   append = T
-    # )
-    write.csv(tableData, exportFileName, row.names = FALSE)
-  }
+  write.csv(tableData, exportFileName, row.names = FALSE)
 }

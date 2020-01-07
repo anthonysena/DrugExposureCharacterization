@@ -130,6 +130,7 @@ dfDeDataPresenceColClasses=c("integer",
                              "integer",
                              "integer",
                              "integer",
+                             "integer",
                              "Date",
                              "Date"
                              )
