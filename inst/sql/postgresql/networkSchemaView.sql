@@ -6,6 +6,7 @@ CREATE VIEW @networkSchema.v_drug_strength AS
     c1.concept_name AS ingredient_name,
     x.drug_concept_id,
     c2.concept_name AS drug_name,
+    c2.concept_class_id as drug_concept_class_id,
     x.dose_form_concept_id,
         CASE
             WHEN (x.dose_form_concept_id = 0) THEN 'UNSPECIFIED'::character varying
@@ -45,7 +46,6 @@ CREATE VIEW @networkSchema.v_drug_strength AS
      JOIN @networkSchema.concept c5 ON c5.concept_id = x.numerator_unit_concept_id
      JOIN @networkSchema.concept c6 ON c6.concept_id = x.denominator_unit_concept_id
      JOIN @networkSchema.concept c7 ON c7.concept_id = x.dose_form_group_concept_id
-  ORDER BY c3.concept_name
 ;
 
 DROP VIEW IF EXISTS @networkSchema.v_drug_exposure_data_presence CASCADE;
@@ -57,6 +57,7 @@ CREATE VIEW @networkSchema.v_drug_exposure_data_presence AS
     x.ingredient_name,
     de.drug_concept_id,
     x.drug_name,
+    x.drug_concept_class_id,
     de.days_supply,
     de.quantity,
     de.sig,
@@ -90,6 +91,7 @@ CREATE VIEW @networkSchema.v_drug_exposure_detail AS
     x.ingredient_name,
     de.drug_concept_id,
     x.drug_name,
+    x.drug_concept_class_id,
     de.drug_type_concept_id,
     c1.concept_name AS drug_type,
     de.visit_type_concept_id,
@@ -125,6 +127,7 @@ CREATE VIEW @networkSchema.v_drug_exposure_overview AS
     x.ingredient_name,
     de.drug_concept_id,
     x.drug_name,
+    x.drug_concept_class_id,
     x.dose_form_concept_id,
     x.dose_form,
     x.dose_form_group_concept_id,
@@ -172,5 +175,4 @@ GROUP BY
 	CASE WHEN drug_exposure_end_date_spec <= 0 THEN 0 ELSE 1 END,
 	CASE WHEN strength <= 0 THEN 0 ELSE 1 END,
 	CASE WHEN COALESCE(duration_days, 0) = 0 THEN 0 ELSE 1 END
-order by ingredient_name, source_name, SUM(tot_rec_cnt) desc
 ;

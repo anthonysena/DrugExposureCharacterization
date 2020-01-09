@@ -246,3 +246,8 @@ DatabaseConnector::insertTable(connection = networkDbConnection,
                                tempTable = FALSE,
                                useMppBulkLoad = FALSE)
 
+# Establish the network schema's indicies
+networkViewSql <- DrugUtilization::getNetworkResultsIndexSql(networkSchema = networkSchema)
+SqlRender::writeSql(sql=networkViewSql, "network_index.sql")
+DatabaseConnector::executeSql(connection = networkDbConnection, sql = networkViewSql)
+

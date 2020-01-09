@@ -1,4 +1,4 @@
-SELECT c.*
+SELECT DISTINCT c.*
 FROM @cdmDatabaseSchema.concept c
 INNER JOIN  (
 	SELECT DISTINCT drug_concept_id concept_id FROM @resultsSchema.dus_de_data_presence
