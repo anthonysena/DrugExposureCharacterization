@@ -1,23 +1,25 @@
-Package: DrugUtilization
+Package: DrugExposureCharacterization
 Type: Package
-Title: Generating drug utilization study statistics against the OMOP CDM
+Title: Generating drug exposure summary statistics against the OMOP CDM
 Version: 0.0.1
-Date: 2019-12-13
+Date: 2022-01-25
 Authors@R: c(
-  person("Anthony", "Sena", , "asena5@its.jnj.com", role = c("aut", "cre"))
+  person("Anthony", "Sena", , "sena@ohdsi.org", role = c("aut", "cre"))
   )
-Maintainer: Anthony Sena <asena5@its.jnj.com>
-Description: An R package for generating summary statistics for drug utilization studies using the OMOP Common Data Model.
-License: Apache License 2.0
-VignetteBuilder: knitr
+Maintainer: Anthony Sena <sena@ohdsi.org>
+Description: An R package for generating drug exposure summary statistics for drug utilization studies using the OMOP Common Data Model.
+Depends:
+  DatabaseConnector (>= 5.0.0),
+  R (>= 3.6.0)
 Imports:
-    rJava,
-    SqlRender,
-    ParallelLogger
+  knitr,
+  SqlRender,
+  ParallelLogger
 Suggests:
   testthat,
-  knitr,
   rmarkdown
+License: Apache License
+VignetteBuilder: knitr
+RoxygenNote: 7.1.2
 Encoding: UTF-8
-LazyData: true
-RoxygenNote: 6.1.1
+Language: en-US

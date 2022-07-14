@@ -14,7 +14,7 @@ SELECT
 	o.field_name,
 	o.tot_spec, 
 	o.pct_spec  
-FROM @resultsSchema.dus_overview o 
-INNER JOIN @cdmDatabaseSchema.concept c ON o.concept_id = c.concept_id
+FROM @results_database_schema.dus_overview o 
+INNER JOIN @cdm_database_schema.concept c ON o.concept_id = c.concept_id
 ORDER BY o.total_records desc, concept_id
 ;

@@ -4,13 +4,13 @@
 user <- if(Sys.getenv("DB_USER")=="") NULL else Sys.getenv("DB_USER")
 password <- if(Sys.getenv("DB_PASSWORD")=="") NULL else Sys.getenv("DB_PASSWORD")
 cdmDatabaseSchemaList <- as.vector(strsplit(Sys.getenv("CDM_SCHEMA_LIST"), ",")[[1]])
-resultsSchemaList <- as.vector(strsplit(Sys.getenv("RESULTS_SCHEMA_LIST"), ",")[[1]])
+resultsDatabaseSchemaList <- as.vector(strsplit(Sys.getenv("RESULTS_SCHEMA_LIST"), ",")[[1]])
 databaseList <- as.vector(strsplit(Sys.getenv("DATABASE_LIST"), ",")[[1]])
 outputFolder <- getwd()
 
 if (
-    length(cdmDatabaseSchemaList) != length(resultsSchemaList) || 
-    length(resultsSchemaList) != length(databaseList)
+    length(cdmDatabaseSchemaList) != length(resultsDatabaseSchemaList) || 
+    length(resultsDatabaseSchemaList) != length(databaseList)
     ) {
   stop("The CDM, results and database lists match in length")
 }
@@ -49,16 +49,16 @@ export <- TRUE; # Use this when you'd like to control when to export to CSV
 
 for (sourceId in 1:length(cdmDatabaseSchemaList)) {
   cdmDatabaseSchema <- cdmDatabaseSchemaList[sourceId]
-  resultsSchema <- resultsSchemaList[sourceId]
+  resultsDatabaseSchema <- resultsDatabaseSchemaList[sourceId]
   databaseName <- databaseList[sourceId]
 
   print(paste("Create summary", databaseName))
   
   # Create exposure overview
-  DrugUtilization::createDrugExposureOverview(
+  DrugExposureCharacterization::createDrugExposureOverview(
     connectionDetails,
     cdmDatabaseSchema = cdmDatabaseSchema,
-    resultsSchema = resultsSchema,
+    resultsDatabaseSchema = resultsDatabaseSchema,
     drugIngredientConceptIds = drugConceptsOfInterest,
     debug = debug,
     debugSqlFile = "test.dsql"
@@ -66,10 +66,10 @@ for (sourceId in 1:length(cdmDatabaseSchemaList)) {
   
   if (export) {
     # Export the results
-    DrugUtilization::exportResultsToCSV(
+    DrugExposureCharacterization::exportResultsToCSV(
       connectionDetails,
       cdmDatabaseSchema = cdmDatabaseSchema,
-      resultsSchema = resultsSchema,
+      resultsDatabaseSchema = resultsDatabaseSchema,
       outputFolder = outputFolder,
       sourceId = sourceId,
       sourceName = databaseName
@@ -95,12 +95,12 @@ networkDbConnection <- DatabaseConnector::connect(networkDbConnectionDetails)
 networkSchema <- Sys.getenv("NETWORK_SCHEMA")
 
 # Establish the network schema's tables
-networkDDLSql <- DrugUtilization::getNetworkResultsDDLSql(networkSchema = networkSchema)
+networkDDLSql <- DrugExposureCharacterization::getNetworkResultsDDLSql(networkSchema = networkSchema)
 SqlRender::writeSql(sql=networkDDLSql, "network.sql")
 DatabaseConnector::executeSql(connection = networkDbConnection, sql = networkDDLSql)
 
 # Establish the network schema's views
-networkViewSql <- DrugUtilization::getNetworkResultsViewSql(networkSchema = networkSchema)
+networkViewSql <- DrugExposureCharacterization::getNetworkResultsViewSql(networkSchema = networkSchema)
 SqlRender::writeSql(sql=networkViewSql, "network_views.sql")
 DatabaseConnector::executeSql(connection = networkDbConnection, sql = networkViewSql)
 
@@ -247,7 +247,7 @@ DatabaseConnector::insertTable(connection = networkDbConnection,
                                useMppBulkLoad = FALSE)
 
 # Establish the network schema's indicies
-networkViewSql <- DrugUtilization::getNetworkResultsIndexSql(networkSchema = networkSchema)
+networkViewSql <- DrugExposureCharacterization::getNetworkResultsIndexSql(networkSchema = networkSchema)
 SqlRender::writeSql(sql=networkViewSql, "network_index.sql")
 DatabaseConnector::executeSql(connection = networkDbConnection, sql = networkViewSql)
 

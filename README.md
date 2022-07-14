@@ -1,14 +1,11 @@
-# DrugUtilization
+# DrugExposureCharacterization
 
-## Introduction
+# Introduction
 This R package contains resources for the evaulation of drug exposures in the OMOP CDM for performing drug utilization studies.
 
-## Installation 
-1. On Windows, make sure [RTools](http://cran.r-project.org/bin/windows/Rtools/) is installed.
-2. The DatabaseConnector and SqlRender packages require Java. Java can be downloaded from
-<a href="http://www.java.com" target="_blank">http://www.java.com</a>.
-3. Download and open the R package using RStudio. 
-4. Create the file `.Renviron` in the root of the package to hold the settings for connecting to the CDM for performing the drug utilization summary.
+# Example
+- Download and open the R package using RStudio. 
+- Create the file `.Renviron` in the root of the package to hold the settings for connecting to the CDM for performing the drug utilization summary.
 
 ````
 # --------------------------------
@@ -46,7 +43,7 @@ The package provides functions to perform the drug exposure summary and for asse
 1.   Create a drug exposure summary in the results schema of your CDM for a list of `drugIngredientConceptIds`:
 
 ````
-DrugUtilization::createDrugExposureOverview(
+DrugExposureCharacterization::createDrugExposureOverview(
     connectionDetails,
     cdmDatabaseSchema = cdmDatabaseSchema,
     resultsSchema = resultsSchema,
@@ -61,7 +58,7 @@ The `debug` setting is used when you'd like to emit the SQL to a file vs. runnin
 2. Export the results from the results schema to the local file system as CSVs:
 
 ````
-    DrugUtilization::exportResultsToCSV(
+    DrugExposureCharacterization::exportResultsToCSV(
       connectionDetails,
       cdmDatabaseSchema = cdmDatabaseSchema,
       resultsSchema = resultsSchema,
@@ -76,7 +73,7 @@ The `sourceId` and `sourceName` parameters are required but allow for users to d
 3. Create a PostgreSQL network database & schema to hold the results
 
 ````
-networkDDLSql <- DrugUtilization::getNetworkResultsDDLSql(networkSchema = networkSchema)
+networkDDLSql <- DrugExposureCharacterization::getNetworkResultsDDLSql(networkSchema = networkSchema)
 DatabaseConnector::executeSql(connection = networkDbConnection, sql = networkDDLSql)
 ````
 
@@ -86,8 +83,26 @@ The code above will create the necessary tables & views in the PostgreSQL databa
 
 Refer to the `extras/TestCode.R` code in the package to see how this is scripted. 
 
+# Technology
+
+DrugExposureCharacterization is an R package.
+
+# System requirements
+
+Requires R (version 3.6.0 or higher).
+
+# Getting Started
+
+1.  Make sure your R environment is properly configured. This means that Java must be installed. See [these instructions](https://ohdsi.github.io/Hades/rSetup.html) for how to configure your R environment.
+
+2.  In R, use the following commands to download and install DrugExposureCharacterization:
+
+    ``` r
+    remotes::install_github("OHDSI/DrugExposureCharacterization")
+    ```
+
 ## Development
-DrugUtilization is being developed in R Studio.
+DrugExposureCharacterization is being developed in R Studio.
 
 **Development Status**
 

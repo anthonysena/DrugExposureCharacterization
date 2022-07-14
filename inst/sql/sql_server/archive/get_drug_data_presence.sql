@@ -25,7 +25,7 @@ SELECT
 	o.person_cnt,
 	o.person_cnt_total,
 	o.person_cnt_pct
-FROM @resultsSchema.dus_data_presence o 
-INNER JOIN @cdmDatabaseSchema.concept c ON o.concept_id = c.concept_id
+FROM @results_database_schema.dus_data_presence o 
+INNER JOIN @cdm_database_schema.concept c ON o.concept_id = c.concept_id
 ORDER BY c.concept_id
 ;

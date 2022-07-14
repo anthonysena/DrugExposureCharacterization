@@ -1,3 +1,3 @@
 SELECT *
-FROM @resultsSchema.@targetTable
+FROM @results_database_schema.@target_table
 ;

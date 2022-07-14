@@ -1,6 +1,6 @@
-IF OBJECT_ID('@resultsSchema.dus_overview', 'U') IS NOT NULL DROP TABLE @resultsSchema.dus_overview;
+IF OBJECT_ID('@results_database_schema.dus_overview', 'U') IS NOT NULL DROP TABLE @results_database_schema.dus_overview;
 
-CREATE TABLE @resultsSchema.dus_overview (
+CREATE TABLE @results_database_schema.dus_overview (
   concept_id			    BIGINT			  NOT NULL,
 	total_records			  BIGINT			  NOT NULL, 
 	total_person_cnt		BIGINT			  NOT NULL,
@@ -24,7 +24,7 @@ INSERT INTO #TOTALS (
 	tot_pc
 )
 SELECT c.concept_id, COUNT(*) tot_rc, COUNT(DISTINCT person_id) tot_pc
-FROM @cdmDatabaseSchema.drug_exposure de
+FROM @cdm_database_schema.drug_exposure de
 INNER JOIN #CONCEPTS c ON de.drug_concept_id = c.concept_id
 GROUP BY c.concept_id
 ;
@@ -46,7 +46,7 @@ SELECT
 	c.concept_id, 
 	'drug_exposure_start_date' field_name,
 	SUM(CASE WHEN de.drug_exposure_start_date IS NOT NULL THEN 1 ELSE 0 END) tot_spec
-FROM @cdmDatabaseSchema.drug_exposure de
+FROM @cdm_database_schema.drug_exposure de
 INNER JOIN #CONCEPTS c ON de.drug_concept_id = c.concept_id
 GROUP BY c.concept_id
 --UNION ALL
@@ -54,7 +54,7 @@ GROUP BY c.concept_id
 --	c.concept_id, 
 --	'drug_exposure_start_datetime' field_name,
 --	SUM(CASE WHEN de.drug_exposure_start_datetime IS NOT NULL THEN 1 ELSE 0 END) tot_spec
---FROM @cdmDatabaseSchema.drug_exposure de
+--FROM @cdm_database_schema.drug_exposure de
 --INNER JOIN #CONCEPTS c ON de.drug_concept_id = c.concept_id
 --GROUP BY c.concept_id
 UNION ALL
@@ -62,7 +62,7 @@ SELECT
 	c.concept_id, 
 	'drug_exposure_end_date' field_name,
 	SUM(CASE WHEN de.drug_exposure_end_date IS NOT NULL THEN 1 ELSE 0 END) tot_spec
-FROM @cdmDatabaseSchema.drug_exposure de
+FROM @cdm_database_schema.drug_exposure de
 INNER JOIN #CONCEPTS c ON de.drug_concept_id = c.concept_id
 GROUP BY c.concept_id
 --UNION ALL
@@ -70,7 +70,7 @@ GROUP BY c.concept_id
 --	c.concept_id, 
 --	'drug_exposure_end_datetime' field_name,
 --	SUM(CASE WHEN de.drug_exposure_end_datetime IS NOT NULL THEN 1 ELSE 0 END) tot_spec
---FROM @cdmDatabaseSchema.drug_exposure de
+--FROM @cdm_database_schema.drug_exposure de
 --INNER JOIN #CONCEPTS c ON de.drug_concept_id = c.concept_id
 --GROUP BY c.concept_id
 UNION ALL
@@ -78,7 +78,7 @@ SELECT
 	c.concept_id, 
 	'drug_type_concept_id' field_name,
 	SUM(CASE WHEN de.drug_type_concept_id IS NOT NULL THEN 1 ELSE 0 END) tot_spec
-FROM @cdmDatabaseSchema.drug_exposure de
+FROM @cdm_database_schema.drug_exposure de
 INNER JOIN #CONCEPTS c ON de.drug_concept_id = c.concept_id
 GROUP BY c.concept_id
 UNION ALL
@@ -86,7 +86,7 @@ SELECT
 	c.concept_id, 
 	'quantity' field_name,
 	SUM(CASE WHEN de.quantity IS NOT NULL THEN 1 ELSE 0 END) tot_spec
-FROM @cdmDatabaseSchema.drug_exposure de
+FROM @cdm_database_schema.drug_exposure de
 INNER JOIN #CONCEPTS c ON de.drug_concept_id = c.concept_id
 GROUP BY c.concept_id
 UNION ALL
@@ -94,7 +94,7 @@ SELECT
 	c.concept_id, 
 	'days_supply' field_name,
 	SUM(CASE WHEN de.days_supply IS NOT NULL THEN 1 ELSE 0 END) tot_spec
-FROM @cdmDatabaseSchema.drug_exposure de
+FROM @cdm_database_schema.drug_exposure de
 INNER JOIN #CONCEPTS c ON de.drug_concept_id = c.concept_id
 GROUP BY c.concept_id
 UNION ALL
@@ -102,12 +102,12 @@ SELECT
 	c.concept_id, 
 	'sig' field_name,
 	SUM(CASE WHEN de.sig IS NOT NULL THEN 1 ELSE 0 END) tot_spec
-FROM @cdmDatabaseSchema.drug_exposure de
+FROM @cdm_database_schema.drug_exposure de
 INNER JOIN #CONCEPTS c ON de.drug_concept_id = c.concept_id
 GROUP BY c.concept_id
 ;
 
-INSERT INTO @resultsSchema.dus_overview (
+INSERT INTO @results_database_schema.dus_overview (
   concept_id,
 	total_records, 
 	total_person_cnt,
@@ -136,9 +136,9 @@ LEFT JOIN (
 ) res ON c.concept_id = res.concept_id
 ;
 
-IF OBJECT_ID('@resultsSchema.dus_dist', 'U') IS NOT NULL DROP TABLE @resultsSchema.dus_dist;
+IF OBJECT_ID('@results_database_schema.dus_dist', 'U') IS NOT NULL DROP TABLE @results_database_schema.dus_dist;
 
-CREATE TABLE @resultsSchema.dus_dist (
+CREATE TABLE @results_database_schema.dus_dist (
   concept_id			    BIGINT			  NOT NULL,
   field_name          VARCHAR(50)   NOT NULL,
   field_val           VARCHAR(MAX)  NOT NULL,
@@ -146,7 +146,7 @@ CREATE TABLE @resultsSchema.dus_dist (
 	total_person_cnt		BIGINT			  NOT NULL
 );
 
-INSERT INTO @resultsSchema.dus_dist (
+INSERT INTO @results_database_schema.dus_dist (
   concept_id,
   field_name,
   field_val,
@@ -159,7 +159,7 @@ SELECT
 	CAST(days_supply as VARCHAR(MAX)) field_value,
 	COUNT(*) total_records,
 	COUNT(DISTINCT person_id) total_person_cnt
-FROM @cdmDatabaseSchema.drug_exposure de
+FROM @cdm_database_schema.drug_exposure de
 INNER JOIN #CONCEPTS c ON de.drug_concept_id = c.concept_id
 WHERE days_supply IS NOT NULL
 GROUP BY c.concept_id, days_supply
@@ -170,7 +170,7 @@ SELECT
 	CAST(quantity AS VARCHAR(MAX)) field_value,
 	COUNT(*) total_records,
 	COUNT(DISTINCT person_id) total_person_cnt
-FROM @cdmDatabaseSchema.drug_exposure de
+FROM @cdm_database_schema.drug_exposure de
 INNER JOIN #CONCEPTS c ON de.drug_concept_id = c.concept_id
 WHERE quantity IS NOT NULL
 GROUP BY c.concept_id, quantity
@@ -181,15 +181,15 @@ SELECT
 	sig field_value,
 	COUNT(*) total_records,
 	COUNT(DISTINCT person_id) total_person_cnt
-FROM @cdmDatabaseSchema.drug_exposure de
+FROM @cdm_database_schema.drug_exposure de
 INNER JOIN #CONCEPTS c ON de.drug_concept_id = c.concept_id
 WHERE sig IS NOT NULL
 GROUP BY c.concept_id, sig
 ;
 
-IF OBJECT_ID('@resultsSchema.dus_data_presence', 'U') IS NOT NULL DROP TABLE @resultsSchema.dus_data_presence;
+IF OBJECT_ID('@results_database_schema.dus_data_presence', 'U') IS NOT NULL DROP TABLE @results_database_schema.dus_data_presence;
 
-CREATE TABLE @resultsSchema.dus_data_presence (
+CREATE TABLE @results_database_schema.dus_data_presence (
   concept_id			    BIGINT			  NOT NULL,
   field_1_name        VARCHAR(50)   NOT NULL,
   field_1_pres        INT           NOT NULL,
@@ -210,7 +210,7 @@ CREATE TABLE @resultsSchema.dus_data_presence (
 );
 
 -- This query counts all the combinations of days_supply, quantity and sig for each of the drug concepts
-INSERT INTO @resultsSchema.dus_data_presence (
+INSERT INTO @results_database_schema.dus_data_presence (
 	concept_id,
 	field_1_name,
 	field_1_pres,
@@ -250,7 +250,7 @@ FROM (
 		CASE WHEN de.sig IS NOT NULL THEN 1 ELSE 0 END field_3_pres,
 		COUNT(*) cnt,
 		COUNT(DISTINCT de.person_id) person_cnt
-	FROM @cdmDatabaseSchema.drug_exposure de
+	FROM @cdm_database_schema.drug_exposure de
 	INNER JOIN #CONCEPTS c ON de.drug_concept_id = c.concept_id
 	GROUP BY 
 		c.concept_id, 
@@ -263,7 +263,7 @@ INNER JOIN (
 		de.drug_concept_id  concept_id,
 		COUNT(*) total_records,
 		COUNT(DISTINCT de.person_id) total_person_cnt
-	FROM @cdmDatabaseSchema.drug_exposure de
+	FROM @cdm_database_schema.drug_exposure de
 	INNER JOIN #CONCEPTS c ON de.drug_concept_id = c.concept_id
 	GROUP BY 
 		de.drug_concept_id

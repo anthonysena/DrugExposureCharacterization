@@ -1,8 +1,8 @@
 DROP TABLE IF EXISTS @networkSchema.de_overview CASCADE;
 
 CREATE TABLE @networkSchema.de_overview (
-	source_id INT NOT NULL,
-    drug_concept_id INT NOT NULL,
+	source_id character varying(255) NOT NULL,
+  drug_concept_id INT NOT NULL,
 	tot_rec_cnt BIGINT NOT NULL, 
 	tot_person_cnt BIGINT NOT NULL,
 	min_start_date TIMESTAMP NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE @networkSchema.de_overview (
 DROP TABLE IF EXISTS @networkSchema.de_detail CASCADE;
 
 CREATE TABLE @networkSchema.de_detail (
-  source_id INT NOT NULL,
+  source_id character varying(255) NOT NULL,
   drug_concept_id INT NOT NULL,
   drug_type_concept_id INT NOT NULL,
   visit_type_concept_id INT NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE @networkSchema.de_detail (
 DROP TABLE IF EXISTS @networkSchema.drug_concept_xref CASCADE;
 
 CREATE TABLE @networkSchema.drug_concept_xref (
-  source_id INT NOT NULL,
+  source_id character varying(255) NOT NULL,
   drug_concept_id INT NOT NULL,
   ingredient_concept_id INT NOT NULL,
   dose_form_concept_id INT NOT NULL,
@@ -38,15 +38,15 @@ CREATE TABLE @networkSchema.drug_concept_xref (
   denominator_value NUMERIC NOT NULL,
   denominator_unit_concept_id INT NOT NULL,
   box_size INT NULL,
-  valid_start_date TIMESTAMP NOT NULL,
-  valid_end_date TIMESTAMP NOT NULL,
+  valid_start_date TIMESTAMP NULL,
+  valid_end_date TIMESTAMP NULL,
   invalid_reason VARCHAR(1) NULL
 );
 
 DROP TABLE IF EXISTS @networkSchema.de_data_presence CASCADE;
 
 CREATE TABLE @networkSchema.de_data_presence (
-  source_id INT NOT NULL,
+  source_id character varying(255) NOT NULL,
   drug_concept_id BIGINT NOT NULL,
   days_supply INT NULL,
   quantity NUMERIC NULL,
@@ -81,7 +81,7 @@ DROP TABLE IF EXISTS @networkSchema.source CASCADE;
 
 CREATE TABLE @networkSchema.source
 (
-    source_id integer NOT NULL,
+    source_id character varying(255) NOT NULL,
     source_name character varying(255) NOT NULL,
     vocabulary_version character varying(255) NOT NULL,
     CONSTRAINT pk_source_id PRIMARY KEY (source_id),

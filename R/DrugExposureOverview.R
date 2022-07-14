@@ -1,8 +1,8 @@
 #' @export
 createDrugExposureOverview <- function(connectionDetails,
                                        cdmDatabaseSchema,
-                                       oracleTempSchema = cdmDatabaseSchema,
-                                       resultsSchema,
+                                       tempEmulationSchema = getOption("sqlRenderTempEmulationSchema"),
+                                       resultsDatabaseSchema,
                                        drugIngredientConceptIds = c(),
                                        debug = F,
                                        debugSqlFile = "") {
@@ -16,12 +16,12 @@ createDrugExposureOverview <- function(connectionDetails,
   on.exit(DatabaseConnector::disconnect(connection))
   
   # Verify that only Ingredient concepts are specified
-  conceptList <- DrugUtilization::getConcepts(
+  conceptList <- DrugExposureCharacterization::getConcepts(
     connection, 
     cdmDatabaseSchema = cdmDatabaseSchema, 
     conceptIds = drugIngredientConceptIds
   )
-  if (!DrugUtilization::isConceptListOfIngredients(conceptList, drugConceptsOfInterest)) {
+  if (!DrugExposureCharacterization::isConceptListOfIngredients(conceptList, drugConceptsOfInterest)) {
     print(knitr::kable(conceptList))
     stop("This function only supports Ingredient concepts. Please review the concept(s) above. Any concepts missing may not exist in the target vocabulary)")
   }
@@ -31,12 +31,12 @@ createDrugExposureOverview <- function(connectionDetails,
   sql <-
     SqlRender::loadRenderTranslateSql(
       sqlFilename = "create_drug_exposure_summary.sql",
-      packageName = "DrugUtilization",
+      packageName = "DrugExposureCharacterization",
       dbms = attr(connection, "dbms"),
-      oracleTempSchema = oracleTempSchema,
-      cdmDatabaseSchema = cdmDatabaseSchema,
-      resultsSchema = resultsSchema,
-      drugIngredientConceptIds = drugIngredientConceptIds
+      tempEmulationSchema = tempEmulationSchema,
+      cdm_database_schema = cdmDatabaseSchema,
+      results_database_schema = resultsDatabaseSchema,
+      drug_ingredient_concept_ids = drugIngredientConceptIds
     )
   
   if (debug) {

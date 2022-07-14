@@ -11,7 +11,7 @@ INSERT INTO #CONCEPTS_INGRED (
 SELECT DISTINCT 
   ca.ancestor_concept_id ingredient_concept_id,
   c.concept_id
-from @cdmDatabaseSchema.concept_ancestor ca
-inner join @cdmDatabaseSchema.concept c ON ca.descendant_concept_id = c.concept_id
+from @cdm_database_schema.concept_ancestor ca
+inner join @cdm_database_schema.concept c ON ca.descendant_concept_id = c.concept_id
 where ca.ancestor_concept_id IN (@conceptIds)
 ;

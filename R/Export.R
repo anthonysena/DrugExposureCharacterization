@@ -1,28 +1,27 @@
 #' @export
 exportResultsToCSV <- function(connectionDetails,
                                cdmDatabaseSchema,
-                               oracleTempSchema = cdmDatabaseSchema,
-                               resultsSchema,
+                               tempEmulationSchema = getOption("sqlRenderTempEmulationSchema"),
+                               resultsDatabaseSchema,
                                outputFolder,
-                               sourceId,
-                               sourceName) {
-  if (is.null(sourceId)) {
-    stop("You must provide a source ID to export results.")
+                               databaseId,
+                               databaseName) {
+  if (is.null(databaseId)) {
+    stop("You must provide a database ID to export results.")
   }
-  if (is.null(sourceName)) {
-    stop("You must provide a name for the source.")
+  if (is.null(databaseName)) {
+    stop("You must provide a name for the database.")
   }
   connection <- DatabaseConnector::connect(connectionDetails)
   on.exit(DatabaseConnector::disconnect(connection))
   
-  exportFolder <- file.path(outputFolder, "export", paste0(sourceId, "_", sourceName))
-  if (!file.exists(exportFolder)) {
-    dir.create(exportFolder, recursive = TRUE)
+  if (!dir.exists(outputFolder)) {
+    dir.create(outputFolder, recursive = TRUE)
   }
   
   tablesToExport <- c("dus_de_data_presence", "dus_de_detail", "dus_de_overview", "dus_drug_concept_xref")
   
-  ParallelLogger::logInfo(paste0("Exporting ", sourceName, " results"))
+  ParallelLogger::logInfo(paste0("Exporting ", databaseName, " results"))
   
   # Export the source info
   ParallelLogger::logInfo(("- source info"))
@@ -30,11 +29,11 @@ exportResultsToCSV <- function(connectionDetails,
     .exportSource(
       connection = connection,
       cdmDatabaseSchema = cdmDatabaseSchema,
-      sourceName = sourceName
+      databaseName = databaseName
     ),
     tableName = "source",
-    exportFolder = exportFolder,
-    sourceId = sourceId
+    outputFolder = outputFolder,
+    databaseId = databaseId
   )
   
   # Export the results
@@ -44,12 +43,12 @@ exportResultsToCSV <- function(connectionDetails,
     .writeCSV(
       tableData  = .exportTable(
         connection = connection,
-        resultsSchema = resultsSchema,
+        resultsDatabaseSchema = resultsDatabaseSchema,
         targetTable = tableName
       ),
       tableName = tableName,
-      exportFolder = exportFolder,
-      sourceId = sourceId
+      outputFolder = outputFolder,
+      databaseId = databaseId
     )
   }
   
@@ -59,67 +58,67 @@ exportResultsToCSV <- function(connectionDetails,
     .exportConceptSubset (
       connection = connection,
       cdmDatabaseSchema = cdmDatabaseSchema,
-      resultsSchema = resultsSchema
+      resultsDatabaseSchema = resultsDatabaseSchema
     ),
     tableName = "concept",
-    exportFolder = exportFolder
+    outputFolder = outputFolder
   )
 }
 
 .exportSource <- function(connection,
                           cdmDatabaseSchema,
-                          sourceName) {
+                          databaseName) {
   
   sql <-
     SqlRender::loadRenderTranslateSql(
       sqlFilename = "get_vocab_version.sql",
-      packageName = "DrugUtilization",
+      packageName = "DrugExposureCharacterization",
       dbms = attr(connection, "dbms"),
-      cdmDatabaseSchema = cdmDatabaseSchema
+      cdm_database_schema = cdmDatabaseSchema
     )
   
   vocabInfo <- DatabaseConnector::querySql(connection, sql)
-  return(cbind(SOURCE_NAME = sourceName, vocabInfo))
+  return(cbind(SOURCE_NAME = databaseName, vocabInfo))
 }
 
 .exportConceptSubset <- function(connection,
                                  cdmDatabaseSchema,
-                                 resultsSchema) {
+                                 resultsDatabaseSchema) {
   sql <-
     SqlRender::loadRenderTranslateSql(
       sqlFilename = "get_concept_subset_for_export.sql",
-      packageName = "DrugUtilization",
+      packageName = "DrugExposureCharacterization",
       dbms = attr(connection, "dbms"),
-      cdmDatabaseSchema = cdmDatabaseSchema,
-      resultsSchema = resultsSchema
+      cdm_database_schema = cdmDatabaseSchema,
+      results_database_schema = resultsDatabaseSchema
     )
   
   return(DatabaseConnector::querySql(connection, sql))
 }
 
 .exportTable <- function(connection,
-                         resultsSchema,
+                         resultsDatabaseSchema,
                          targetTable) {
   # Get results
   sql <-
     SqlRender::loadRenderTranslateSql(
       sqlFilename = "select_all_from_table.sql",
-      packageName = "DrugUtilization",
+      packageName = "DrugExposureCharacterization",
       dbms = attr(connection, "dbms"),
-      resultsSchema = resultsSchema,
-      targetTable = targetTable
+      results_database_schema = resultsDatabaseSchema,
+      target_table = targetTable
     )
   
   return(DatabaseConnector::querySql(connection, sql))
 }
 
-.writeCSV <- function (tableData, tableName, exportFolder, sourceId = NULL) {
-  exportFileName <- file.path(exportFolder, paste0(tableName, ".csv"))
+.writeCSV <- function (tableData, tableName, outputFolder, databaseId = NULL) {
+  exportFileName <- file.path(outputFolder, paste0(tableName, ".csv"))
   if (nrow(tableData) <= 0) {
     tableData[nrow(tableData)+1,] <- NA;
   }
-  if (!is.null(sourceId)) {
-    tableData <- cbind(SOURCE_ID = sourceId, tableData)
+  if (!is.null(databaseId)) {
+    tableData <- cbind(SOURCE_ID = databaseId, tableData)
   }
   write.csv(tableData, exportFileName, row.names = FALSE)
 }

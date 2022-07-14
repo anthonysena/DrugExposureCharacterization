@@ -16,10 +16,10 @@ select distinct
 	c2.valid_end_date,
 	c2.invalid_reason,
 	CASE WHEN ISNULL(ds.drug_concept_id, 0) = 0 THEN 0 ELSE 1 END has_drug_strengh_rec
-from @resultsSchema.dus_orphan_source_codes s
-INNER JOIN @cdmDatabaseSchema.concept c ON c.concept_id = s.drug_source_concept_id
-LEFT JOIN @cdmDatabaseSchema.concept_relationship cr ON s.drug_source_concept_id = cr.concept_id_1 and cr.relationship_id = 'Maps to'
-LEFT JOIN @cdmDatabaseSchema.concept c2 ON c2.concept_id = cr.concept_id_2 
-LEFT JOIN @cdmDatabaseSchema.drug_strength ds ON ds.drug_concept_id = c2.concept_id
+from @results_database_schema.dus_orphan_source_codes s
+INNER JOIN @cdm_database_schema.concept c ON c.concept_id = s.drug_source_concept_id
+LEFT JOIN @cdm_database_schema.concept_relationship cr ON s.drug_source_concept_id = cr.concept_id_1 and cr.relationship_id = 'Maps to'
+LEFT JOIN @cdm_database_schema.concept c2 ON c2.concept_id = cr.concept_id_2 
+LEFT JOIN @cdm_database_schema.drug_strength ds ON ds.drug_concept_id = c2.concept_id
 ORDER BY c.concept_name
 ;

@@ -11,12 +11,12 @@ INSERT INTO #CONCEPTS (
 SELECT DISTINCT 
   c.concept_id
 {@includeDescendants == 1} ? {
-from @cdmDatabaseSchema.concept_ancestor ca
-inner join @cdmDatabaseSchema.concept c ON ca.descendant_concept_id = c.concept_id
+from @cdm_database_schema.concept_ancestor ca
+inner join @cdm_database_schema.concept c ON ca.descendant_concept_id = c.concept_id
 where ca.ancestor_concept_id IN (@conceptIds)
 }
 {@includeDescendants != 1} ? {
-from @cdmDatabaseSchema.concept c 
+from @cdm_database_schema.concept c 
 where concept_id IN (@conceptIds) 
 }
 ;
